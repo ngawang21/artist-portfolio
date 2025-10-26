@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('fr');
+---
+
+<BaseLayout title="À propos - Kunga DEMPA TSANG">
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <h1 class="font-serif text-5xl md:text-6xl font-bold mb-6">
+          {t('about.title')}
+        </h1>
+        <p class="text-xl text-gray-600">
+          Peintre contemporain basé à Paris, France
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto mb-20">
+        <div>
+          <img 
+            src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80" 
+            alt="Portrait de l'artiste" 
+            class="rounded-lg shadow-lg w-full"
+            loading="lazy"
+          />
+        </div>
+        
+        <div class="space-y-6">
+          <h2 class="font-serif text-3xl font-bold mb-4">Biographie</h2>
+          <p class="text-gray-700 leading-relaxed">
+            Basé au cœur de Paris, je crée des œuvres d'art contemporaines qui mélangent techniques traditionnelles et sensibilités modernes. Mon travail explore l'interaction de la lumière, de la couleur et de l'émotion, s'inspirant du paysage culturel vibrant de la France.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            Mon œuvre est profondément influencée par la lumière changeante de Paris, les reflets de la Seine et l'énergie vibrante de la vie urbaine. Chaque toile est une exploration de la couleur, de la texture et de l'émotion—un dialogue entre tradition et innovation.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            Je travaille principalement avec des huiles et des acryliques, incorporant souvent des techniques mixtes pour créer de la profondeur et de la dimension. Mon atelier, situé dans le 18ème arrondissement, sert à la fois de sanctuaire créatif et d'espace d'expérimentation artistique.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-4xl mx-auto mb-20 bg-secondary p-12 rounded-lg">
+        <h2 class="font-serif text-3xl font-bold mb-6 text-center">
+          {t('about.statement')}
+        </h2>
+        <blockquote class="text-lg text-gray-700 leading-relaxed italic text-center">
+          "L'art ne consiste pas à reproduire la réalité—il s'agit de capturer l'essence d'un moment, le sentiment d'un lieu, le murmure d'une émotion. À travers mon travail, j'invite les spectateurs à faire une pause, à réfléchir et à trouver leurs propres histoires dans les couches de peinture. Chaque coup de pinceau est une conversation, chaque couleur un mot dans un dialogue continu entre l'artiste et l'observateur."
+        </blockquote>
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-serif text-3xl font-bold mb-8 text-center">
+          {t('about.exhibitions')}
+        </h2>
+        
+        <div class="space-y-6">
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Exposition Solo: "Lumières de Paris"</h3>
+            <p class="text-gray-600 mb-2">Galerie Moderne, Paris • 2024</p>
+            <p class="text-gray-700">
+              Une présentation complète de 30 peintures explorant l'interaction de la lumière et de l'ombre à travers les paysages parisiens.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Exposition Collective: "Voix Contemporaines"</h3>
+            <p class="text-gray-600 mb-2">Musée d'Art Contemporain, Lyon • 2023</p>
+            <p class="text-gray-700">
+              Présenté aux côtés de 15 artistes français émergents dans cette exposition organisée célébrant l'expression artistique moderne.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Foire d'Art: "Paris Art Fair"</h3>
+            <p class="text-gray-600 mb-2">Grand Palais, Paris • 2023</p>
+            <p class="text-gray-700">
+              Représenté par la Galerie Moderne avec une sélection d'œuvres abstraites et figuratives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

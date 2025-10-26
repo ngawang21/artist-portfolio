@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+---
+
+<BaseLayout title="About - Artist Portfolio">
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <!-- Hero -->
+      <div class="max-w-4xl mx-auto text-center mb-16">
+        <h1 class="font-serif text-5xl md:text-6xl font-bold mb-6">
+          {t('about.title')}
+        </h1>
+        <p class="text-xl text-gray-600">
+          Contemporary painter based in Paris, France
+        </p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="grid md:grid-cols-2 gap-12 items-start max-w-6xl mx-auto mb-20">
+        <div>
+          <img 
+            src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80" 
+            alt="Artist portrait" 
+            class="rounded-lg shadow-lg w-full"
+            loading="lazy"
+          />
+        </div>
+        
+        <div class="space-y-6">
+          <h2 class="font-serif text-3xl font-bold mb-4">Biography</h2>
+          <p class="text-gray-700 leading-relaxed">
+            Born and raised in the artistic heart of Paris, I have been painting for over 15 years. My journey began at the École des Beaux-Arts, where I discovered my passion for blending classical techniques with contemporary expression.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            My work is deeply influenced by the ever-changing light of Paris, the Seine's reflections, and the vibrant energy of urban life. Each canvas is an exploration of color, texture, and emotion—a dialogue between tradition and innovation.
+          </p>
+          <p class="text-gray-700 leading-relaxed">
+            I work primarily with oils and acrylics, often incorporating mixed media to create depth and dimension. My studio, located in the 18th arrondissement, serves as both a creative sanctuary and a space for artistic experimentation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Artist Statement -->
+      <div class="max-w-4xl mx-auto mb-20 bg-secondary p-12 rounded-lg">
+        <h2 class="font-serif text-3xl font-bold mb-6 text-center">
+          {t('about.statement')}
+        </h2>
+        <blockquote class="text-lg text-gray-700 leading-relaxed italic text-center">
+          "Art is not about replicating reality—it's about capturing the essence of a moment, the feeling of a place, the whisper of an emotion. Through my work, I invite viewers to pause, reflect, and find their own stories within the layers of paint. Each brushstroke is a conversation, each color a word in an ongoing dialogue between artist and observer."
+        </blockquote>
+      </div>
+
+      <!-- Exhibitions -->
+      <div class="max-w-4xl mx-auto">
+        <h2 class="font-serif text-3xl font-bold mb-8 text-center">
+          {t('about.exhibitions')}
+        </h2>
+        
+        <div class="space-y-6">
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Solo Exhibition: "Lumières de Paris"</h3>
+            <p class="text-gray-600 mb-2">Galerie Moderne, Paris • 2024</p>
+            <p class="text-gray-700">
+              A comprehensive showcase of 30 paintings exploring the interplay of light and shadow across Parisian landscapes.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Group Exhibition: "Contemporary Voices"</h3>
+            <p class="text-gray-600 mb-2">Musée d'Art Contemporain, Lyon • 2023</p>
+            <p class="text-gray-700">
+              Featured alongside 15 emerging French artists in this curated exhibition celebrating modern artistic expression.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Art Fair: "Paris Art Fair"</h3>
+            <p class="text-gray-600 mb-2">Grand Palais, Paris • 2023</p>
+            <p class="text-gray-700">
+              Represented by Galerie Moderne with a selection of abstract and figurative works.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Solo Exhibition: "Urban Poetry"</h3>
+            <p class="text-gray-600 mb-2">Espace d'Art Contemporain, Marseille • 2022</p>
+            <p class="text-gray-700">
+              First major solo exhibition featuring 20 works inspired by urban architecture and city life.
+            </p>
+          </div>
+          
+          <div class="border-l-4 border-accent pl-6 py-2">
+            <h3 class="font-bold text-xl mb-1">Residency: "Artist in Residence"</h3>
+            <p class="text-gray-600 mb-2">Cité Internationale des Arts, Paris • 2021</p>
+            <p class="text-gray-700">
+              Six-month residency focused on developing new techniques in mixed media painting.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Press & Recognition -->
+      <div class="max-w-4xl mx-auto mt-20">
+        <h2 class="font-serif text-3xl font-bold mb-8 text-center">Press & Recognition</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="text-gray-700 italic mb-2">
+              "A masterful blend of classical technique and contemporary vision..."
+            </p>
+            <p class="text-sm text-gray-500">— Le Monde, 2024</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="text-gray-700 italic mb-2">
+              "Captures the soul of Paris with every brushstroke..."
+            </p>
+            <p class="text-sm text-gray-500">— Paris Match, 2023</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="text-gray-700 italic mb-2">
+              "An emerging voice in contemporary French art..."
+            </p>
+            <p class="text-sm text-gray-500">— Art Review, 2023</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-sm">
+            <p class="text-gray-700 italic mb-2">
+              "Bold, expressive, and deeply moving work..."
+            </p>
+            <p class="text-sm text-gray-500">— Beaux Arts Magazine, 2022</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

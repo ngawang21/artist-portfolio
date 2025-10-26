@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { artworks } from '../data/artworks';
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
+const featuredArtworks = artworks.filter(art => art.featured && !art.sold).slice(0, 3);
+---
+
+<BaseLayout title="Artist Portfolio - Contemporary Art from Paris">
+  <!-- Hero Section -->
+  <section class="relative h-[90vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img 
+        src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1920&q=80" 
+        alt="Art studio" 
+        class="w-full h-full object-cover opacity-40"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-white/50 to-white"></div>
+    </div>
+    
+    <div class="relative z-10 text-center px-4">
+      <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 text-balance">
+        {t('home.hero.title')}
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl mx-auto">
+        {t('home.hero.subtitle')}
+      </p>
+      <div class="flex gap-4 justify-center">
+        <a 
+          href="/gallery" 
+          class="px-8 py-3 bg-primary text-white rounded-md hover:bg-gray-800 transition-colors font-medium"
+        >
+          {t('nav.gallery')}
+        </a>
+        <a 
+          href="/contact" 
+          class="px-8 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors font-medium"
+        >
+          {t('nav.contact')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Artworks -->
+  <section class="py-20 bg-secondary">
+    <div class="container mx-auto px-4">
+      <h2 class="font-serif text-4xl md:text-5xl font-bold text-center mb-16">
+        {t('home.featured')}
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        {featuredArtworks.map((artwork) => (
+          <a 
+            href={`/gallery#${artwork.id}`}
+            class="group block bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+          >
+            <div class="aspect-[4/3] overflow-hidden">
+              <img 
+                src={artwork.image} 
+                alt={artwork.title.en}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-2xl font-semibold mb-2">{artwork.title.en}</h3>
+              <p class="text-gray-600 mb-4">{artwork.description.en}</p>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-500">{artwork.dimensions}</span>
+                <span class="font-bold text-accent text-lg">€{artwork.price}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <div class="text-center mt-12">
+        <a 
+          href="/gallery" 
+          class="inline-block px-8 py-3 bg-primary text-white rounded-md hover:bg-gray-800 transition-colors font-medium"
+        >
+          View Full Gallery
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Preview -->
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <img 
+            src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80" 
+            alt="Artist at work" 
+            class="rounded-lg shadow-lg"
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <h2 class="font-serif text-4xl font-bold mb-6">{t('about.title')}</h2>
+          <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+            Based in the heart of Paris, I create contemporary artworks that blend traditional techniques with modern sensibilities. My work explores the interplay of light, color, and emotion, drawing inspiration from the vibrant cultural landscape of France.
+          </p>
+          <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+            Each piece is a journey through memory and imagination, inviting viewers to discover their own narratives within the canvas.
+          </p>
+          <a 
+            href="/about" 
+            class="inline-block px-8 py-3 border-2 border-primary text-primary rounded-md hover:bg-primary hover:text-white transition-colors font-medium"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

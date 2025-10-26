@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('en');
+
+// In a real implementation, these would come from MDX files
+const blogPosts = [
+  {
+    slug: 'inspiration-from-paris',
+    title: 'Finding Inspiration in the Streets of Paris',
+    excerpt: 'How the daily rhythms of Parisian life influence my artistic process and color palette.',
+    date: '2024-10-15',
+    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
+  },
+  {
+    slug: 'techniques-and-tools',
+    title: 'My Favorite Painting Techniques',
+    excerpt: 'A deep dive into the tools and methods I use to create texture and depth in my work.',
+    date: '2024-09-20',
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80',
+  },
+  {
+    slug: 'exhibition-recap',
+    title: 'Lumières de Paris Exhibition Recap',
+    excerpt: 'Reflections on my recent solo exhibition and the incredible support from the art community.',
+    date: '2024-08-10',
+    image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',
+  },
+];
+---
+
+<BaseLayout title="Blog - Artist Portfolio">
+  <section class="py-20">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="font-serif text-5xl md:text-6xl font-bold text-center mb-6">
+          {t('nav.blog')}
+        </h1>
+        <p class="text-center text-gray-600 text-lg mb-16 max-w-2xl mx-auto">
+          Thoughts on art, creativity, and life in Paris
+        </p>
+
+        <div class="space-y-12">
+          {blogPosts.map((post) => (
+            <article class="group">
+              <a href={`/blog/${post.slug}`} class="block md:flex gap-8 hover:opacity-80 transition-opacity">
+                <div class="md:w-1/3 mb-4 md:mb-0">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    class="w-full aspect-video object-cover rounded-lg"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="md:w-2/3">
+                  <time class="text-sm text-gray-500 mb-2 block">
+                    {new Date(post.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
+                  </time>
+                  <h2 class="font-serif text-3xl font-bold mb-3 group-hover:text-accent transition-colors">
+                    {post.title}
+                  </h2>
+                  <p class="text-gray-700 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <span class="inline-block mt-4 text-accent font-medium">
+                    Read more →
+                  </span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

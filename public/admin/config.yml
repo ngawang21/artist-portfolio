@@ -1,0 +1,59 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "artworks"
+    label: "Artworks"
+    folder: "src/content/artworks"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title (English)", name: "title_en", widget: "string" }
+      - { label: "Title (French)", name: "title_fr", widget: "string" }
+      - { label: "Description (English)", name: "description_en", widget: "text" }
+      - { label: "Description (French)", name: "description_fr", widget: "text" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Dimensions", name: "dimensions", widget: "string" }
+      - { label: "Price (EUR)", name: "price", widget: "number" }
+      - { label: "Year", name: "year", widget: "number" }
+      - { label: "Medium", name: "medium", widget: "string" }
+      - { label: "Sold", name: "sold", widget: "boolean", default: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Mollie Payment Link", name: "mollie_link", widget: "string", required: false, hint: "Get your payment link from https://www.mollie.com/dashboard" }
+
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "src/pages/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "mdx"
+    format: "frontmatter"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "../../layouts/BaseLayout.astro" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "About Page (English)"
+        name: "about_en"
+        file: "src/content/pages/about_en.md"
+        fields:
+          - { label: "Biography", name: "biography", widget: "markdown" }
+          - { label: "Artist Statement", name: "statement", widget: "text" }
+          
+      - label: "About Page (French)"
+        name: "about_fr"
+        file: "src/content/pages/about_fr.md"
+        fields:
+          - { label: "Biographie", name: "biography", widget: "markdown" }
+          - { label: "Déclaration de l'artiste", name: "statement", widget: "text" }
+
