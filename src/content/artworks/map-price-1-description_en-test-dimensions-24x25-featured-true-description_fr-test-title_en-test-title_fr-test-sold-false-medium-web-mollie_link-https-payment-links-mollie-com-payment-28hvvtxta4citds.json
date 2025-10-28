@@ -1,0 +1,14 @@
+{
+  "price": 1,
+  "description_en": "test",
+  "dimensions": "24x25",
+  "featured": true,
+  "description_fr": "test",
+  "title_en": "test",
+  "title_fr": "test",
+  "sold": false,
+  "medium": "web",
+  "mollie_link": "https://payment-links.mollie.com/payment/28HVVTXtA4ciTDSEYQD8w",
+  "image": "/images/uploads/10901.webp",
+  "year": 2025
+}
