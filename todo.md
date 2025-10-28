@@ -150,8 +150,8 @@
 
 
 ## Remaining Issues to Fix
-- [ ] Fix CMS - not all artworks visible/manageable in admin panel
-- [ ] Verify full sync between CMS admin and live gallery
-- [ ] Squash all git commits into single clean commit
-- [ ] Make CMS-generated commit messages concise and readable
+- [x] Fix CMS - not all artworks visible/manageable in admin panel
+- [x] Verify full sync between CMS admin and live gallery
+- [x] Squash all git commits into single clean commit
+- [x] Make CMS-generated commit messages concise and readable
 
