@@ -1,14 +1,14 @@
 {
-  "title_en": "A Glimpse Outside",
-  "title_fr": "A glimpse outside",
-  "description_en": "A window into liminal spaces where reality dissolves into contemplation, capturing suspended moments between day and night.",
-  "description_fr": "Une fenêtre sur les espaces liminaux où la réalité se dissout dans la contemplation, capturant des moments suspendus entre jour et nuit.",
-  "image": "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&q=80",
-  "dimensions": "75 × 140 cm",
   "price": 2200,
-  "year": 2024,
-  "medium": "Oil on canvas",
-  "sold": false,
+  "description_en": "A window into liminal spaces where reality dissolves into contemplation, capturing suspended moments between day and night.",
+  "dimensions": "75 × 140 cm",
   "featured": true,
-  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+  "description_fr": "Une fenêtre sur les espaces liminaux où la réalité se dissout dans la contemplation, capturant des moments suspendus entre jour et nuit.",
+  "title_en": "A Glimpse Outside",
+  "title_fr": "A Glimpse Outside",
+  "sold": false,
+  "medium": "Oil on canvas",
+  "mollie_link": "https://payment-links.mollie.com/payment/dt7YfvRTk7xPZdzQxgqAn",
+  "image": "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&q=80",
+  "year": 2024
 }
