@@ -20,10 +20,14 @@ const t = useTranslations('fr');
           <!-- Contact Form -->
           <div>
             <form 
-              action="https://formspree.io/f/YOUR_FORM_ID" 
+              name="contact-fr"
               method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
               class="space-y-6"
             >
+              <input type="hidden" name="form-name" value="contact-fr" />
+              <input type="hidden" name="bot-field" />
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.name')}
@@ -88,9 +92,7 @@ const t = useTranslations('fr');
               </button>
             </form>
 
-            <p class="text-sm text-gray-500 mt-4">
-              * Pour activer ce formulaire, remplacez <code class="bg-gray-100 px-2 py-1 rounded">YOUR_FORM_ID</code> par votre ID Formspree, ou utilisez Netlify Forms en ajoutant <code class="bg-gray-100 px-2 py-1 rounded">data-netlify="true"</code> à la balise form.
-            </p>
+
           </div>
 
           <!-- Contact Information -->
@@ -113,7 +115,7 @@ const t = useTranslations('fr');
                 <strong>Email:</strong> <a href="mailto:dempatsang@gmail.com" class="text-accent hover:underline">dempatsang@gmail.com</a>
               </p>
               <p class="text-gray-700 mt-2">
-                <strong>Téléphone:</strong> <a href="tel:+33123456789" class="text-accent hover:underline">+33 1 23 45 67 89</a>
+                <strong>Téléphone:</strong> <a href="tel:+33663163769" class="text-accent hover:underline">+33 6 63 16 37 69</a>
               </p>
             </div>
 

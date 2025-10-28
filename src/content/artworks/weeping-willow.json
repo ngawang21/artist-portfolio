@@ -1,0 +1,14 @@
+{
+  "title_en": "Weeping Willow",
+  "title_fr": "Saule pleureur",
+  "description_en": "A large-scale work exploring nature as a liminal space between reality and dream, where organic forms dissolve into atmospheric color.",
+  "description_fr": "Une œuvre de grande envergure explorant la nature comme espace liminal entre réalité et rêve, où les formes organiques se dissolvent dans la couleur atmosphérique.",
+  "image": "https://images.unsplash.com/photo-1515405295579-ba7b45403062?w=800&q=80",
+  "dimensions": "97 × 172 cm",
+  "price": 2800,
+  "year": 2024,
+  "medium": "Acrylic and Oil on canvas",
+  "sold": false,
+  "featured": true,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

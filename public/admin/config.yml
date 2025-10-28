@@ -1,6 +1,14 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: ngawang21/artist-portfolio
   branch: main
+  commit_messages:
+    create: 'Add {{collection}}: {{slug}}'
+    update: 'Update {{collection}}: {{slug}}'
+    delete: 'Delete {{collection}}: {{slug}}'
+    uploadMedia: 'Upload {{path}}'
+    deleteMedia: 'Delete {{path}}'
+    openAuthoring: '{{message}}'
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -11,6 +19,8 @@ collections:
     folder: "src/content/artworks"
     create: true
     slug: "{{slug}}"
+    extension: "json"
+    format: "json"
     fields:
       - { label: "Title (English)", name: "title_en", widget: "string" }
       - { label: "Title (French)", name: "title_fr", widget: "string" }

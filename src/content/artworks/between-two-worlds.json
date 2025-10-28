@@ -1,0 +1,14 @@
+{
+  "title_en": "Between Two Worlds",
+  "title_fr": "Entre deux mondes",
+  "description_en": "An exploration of the threshold between the tangible and the imaginary, where familiar becomes strange and the visible dialogues with the suggested.",
+  "description_fr": "Une exploration du seuil entre le tangible et l'imaginaire, où le familier devient étrange et le visible dialogue avec le suggéré.",
+  "image": "https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&q=80",
+  "dimensions": "75 × 140 cm",
+  "price": 2200,
+  "year": 2024,
+  "medium": "Oil and Pigment on canvas",
+  "sold": false,
+  "featured": false,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

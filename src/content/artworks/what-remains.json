@@ -1,0 +1,14 @@
+{
+  "title_en": "What Remains",
+  "title_fr": "Ce qui reste",
+  "description_en": "Combining textile and painting techniques to explore memory and presence, questioning what persists when everything else fades.",
+  "description_fr": "Combinant techniques textiles et picturales pour explorer la mémoire et la présence, questionnant ce qui persiste quand tout le reste s'estompe.",
+  "image": "https://images.unsplash.com/photo-1578926078261-dd5583b5f0e6?w=800&q=80",
+  "dimensions": "116 × 83 cm",
+  "price": 2400,
+  "year": 2024,
+  "medium": "Embroidery and Oil on canvas",
+  "sold": false,
+  "featured": false,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

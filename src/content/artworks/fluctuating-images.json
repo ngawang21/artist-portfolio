@@ -1,0 +1,14 @@
+{
+  "title_en": "Fluctuating Images",
+  "title_fr": "Images fluctuantes",
+  "description_en": "Layered textures and transparencies create atmospheres where calm gives way to unease, exploring the boundaries between reality and dream.",
+  "description_fr": "Des textures et transparences superposées créent des atmosphères où le calme laisse place à l'inquiétude, explorant les frontières entre réalité et rêve.",
+  "image": "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=800&q=80",
+  "dimensions": "75 × 140 cm",
+  "price": 2100,
+  "year": 2024,
+  "medium": "Acrylic and Oil on canvas",
+  "sold": false,
+  "featured": false,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

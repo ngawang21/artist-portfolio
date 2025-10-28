@@ -108,3 +108,50 @@
 - [x] Prepare for GitHub push via agent connector
 - [x] Final verification that artist can upload paintings and sell immediately
 
+
+
+
+## New Requirements - Final Polish
+- [x] Keep initial commit design with About/Feature image on left
+- [x] Fix language toggle to stay on same page (not redirect to home)
+- [x] Remove French placeholder text from contact form
+- [x] Update exhibition info: "Double Trouble" Sept 17 - Nov 2, 2025
+- [x] Fix exhibition organizer to ARTAGON
+- [x] Ensure Mollie payment links work in gallery
+- [x] Verify PDF portfolio content matches site
+- [x] Fix any broken navigation links
+- [x] Final responsive design check
+- [x] Make site ready for artist to use immediately
+
+
+
+
+## CMS Authentication Fix
+- [ ] Replace Git Gateway with GitHub OAuth backend
+- [ ] Update CMS config to use GitHub OAuth
+- [ ] Create setup instructions for GitHub OAuth app
+- [ ] Test CMS login with GitHub authentication
+- [ ] Verify artist can edit content via CMS
+
+
+
+
+## CMS Improvements & Content Sync
+- [x] Fix CMS content sync - new artworks not appearing on live site
+- [x] Ensure existing gallery artworks are manageable in CMS
+- [x] Verify CMS updates appear correctly on live site
+- [ ] Improve admin interface UX and navigation
+- [ ] Add clear update feedback in CMS
+- [ ] Squash all commits into one clean commit
+- [ ] Configure CMS to generate concise commit mess- [x] Redesign About page to be more artistic and visually engaging ] Test all changes before deployment
+- [ ] Ensure backward compatibility with existing functionality
+
+
+
+
+## Remaining Issues to Fix
+- [ ] Fix CMS - not all artworks visible/manageable in admin panel
+- [ ] Verify full sync between CMS admin and live gallery
+- [ ] Squash all git commits into single clean commit
+- [ ] Make CMS-generated commit messages concise and readable
+

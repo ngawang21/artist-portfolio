@@ -226,3 +226,4 @@ This project is open source and available for personal and commercial use.
 
 **Ready to deploy? Follow [NETLIFY_DEPLOYMENT.md](./NETLIFY_DEPLOYMENT.md) for step-by-step instructions!**
 
+

@@ -1,0 +1,14 @@
+{
+  "title_en": "Drown it out, drown me out",
+  "title_fr": "Drown it out, drown me out",
+  "description_en": "Deep blues and layered textures evoke submersion and introspection, creating an immersive atmosphere of solitude and contemplation.",
+  "description_fr": "Des bleus profonds et des textures superposées évoquent la submersion et l'introspection, créant une atmosphère immersive de solitude et de contemplation.",
+  "image": "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80",
+  "dimensions": "75 × 140 cm",
+  "price": 2000,
+  "year": 2023,
+  "medium": "Acrylic and Oil on canvas",
+  "sold": false,
+  "featured": false,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

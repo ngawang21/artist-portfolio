@@ -20,10 +20,16 @@ const t = useTranslations('en');
           <!-- Contact Form -->
           <div>
             <form 
-              action="https://formspree.io/f/YOUR_FORM_ID" 
+              name="contact"
               method="POST"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
               class="space-y-6"
             >
+              <input type="hidden" name="form-name" value="contact" />
+              <p class="hidden">
+                <label>Don't fill this out: <input name="bot-field" /></label>
+              </p>
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
                   {t('contact.name')}
@@ -88,9 +94,7 @@ const t = useTranslations('en');
               </button>
             </form>
 
-            <p class="text-sm text-gray-500 mt-4">
-              * To enable this form, replace <code class="bg-gray-100 px-2 py-1 rounded">YOUR_FORM_ID</code> with your Formspree form ID, or use Netlify Forms by adding <code class="bg-gray-100 px-2 py-1 rounded">data-netlify="true"</code> to the form tag.
-            </p>
+
           </div>
 
           <!-- Contact Information -->
@@ -113,7 +117,7 @@ const t = useTranslations('en');
                 <strong>Email:</strong> <a href="mailto:dempatsang@gmail.com" class="text-accent hover:underline">dempatsang@gmail.com</a>
               </p>
               <p class="text-gray-700 mt-2">
-                <strong>Phone:</strong> <a href="tel:+33123456789" class="text-accent hover:underline">+33 1 23 45 67 89</a>
+                <strong>Phone:</strong> <a href="tel:+33663163769" class="text-accent hover:underline">+33 6 63 16 37 69</a>
               </p>
             </div>
 
@@ -121,7 +125,7 @@ const t = useTranslations('en');
               <h3 class="font-serif text-2xl font-bold mb-4">Social Media</h3>
               <div class="flex flex-col gap-3">
                 <a 
-                  href="https://instagram.com/kunga.dempa" 
+                  href="https://www.instagram.com/kunga.dempa/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   class="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors"
@@ -131,30 +135,6 @@ const t = useTranslations('en');
                     <path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                   </svg>
                   @kunga.dempa
-                </a>
-                
-                <a 
-                  href="https://facebook.com/artist" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                  Artist Portfolio Paris
-                </a>
-                
-                <a 
-                  href="https://twitter.com/artist" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-2 text-gray-700 hover:text-accent transition-colors"
-                >
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                  @artist_paris
                 </a>
               </div>
             </div>

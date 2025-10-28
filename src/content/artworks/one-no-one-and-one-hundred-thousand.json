@@ -1,0 +1,14 @@
+{
+  "title_en": "One, No One, and One Hundred Thousand",
+  "title_fr": "«Un, personne et cent mille»",
+  "description_en": "Inspired by Luigi Pirandello's novel, this work explores the multiplicity of identity - how each person is perceived differently by others while remaining fundamentally alone with themselves.",
+  "description_fr": "Inspiré par le roman de Luigi Pirandello, cette œuvre explore la multiplicité de l'identité - comment chaque personne est perçue différemment par les autres tout en restant fondamentalement seule face à elle-même.",
+  "image": "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=800&q=80",
+  "dimensions": "75 × 140 cm",
+  "price": 2000,
+  "year": 2023,
+  "medium": "Oil and Pigment on canvas",
+  "sold": false,
+  "featured": true,
+  "mollie_link": "https://my.mollie.com/checkout/test-mode"
+}

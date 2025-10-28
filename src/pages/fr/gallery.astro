@@ -1,6 +1,36 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { artworks } from '../../data/artworks';
+import { getCollection } from 'astro:content';
+
+// Get all artworks from content collection
+const artworksEntries = await getCollection('artworks');
+const artworks = artworksEntries.map(entry => ({
+  id: entry.id,
+  slug: entry.id,
+  title: {
+    en: entry.data.title_en,
+    fr: entry.data.title_fr
+  },
+  description: {
+    en: entry.data.description_en,
+    fr: entry.data.description_fr
+  },
+  image: entry.data.image,
+  dimensions: entry.data.dimensions,
+  price: entry.data.price,
+  year: entry.data.year,
+  medium: entry.data.medium,
+  sold: entry.data.sold,
+  featured: entry.data.featured,
+  mollieLink: entry.data.mollie_link
+}));
+
+// Sort by year (newest first), then by featured status
+artworks.sort((a, b) => {
+  if (a.featured && !b.featured) return -1;
+  if (!a.featured && b.featured) return 1;
+  return b.year - a.year;
+});
 import { useTranslations } from '../../i18n/utils';
 
 const t = useTranslations('fr');

@@ -1,9 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { artworks } from '../data/artworks';
+import { getCollection } from 'astro:content';
 import { useTranslations } from '../i18n/utils';
 
 const t = useTranslations('en');
+
+// Get all artworks from content collection
+const artworksEntries = await getCollection('artworks');
+const artworks = artworksEntries.map(entry => ({
+  id: entry.id,
+  slug: entry.id,
+  title: {
+    en: entry.data.title_en,
+    fr: entry.data.title_fr
+  },
+  description: {
+    en: entry.data.description_en,
+    fr: entry.data.description_fr
+  },
+  image: entry.data.image,
+  dimensions: entry.data.dimensions,
+  price: entry.data.price,
+  year: entry.data.year,
+  medium: entry.data.medium,
+  sold: entry.data.sold,
+  featured: entry.data.featured,
+  mollieLink: entry.data.mollie_link
+}));
+
+// Sort by year (newest first), then by featured status
+artworks.sort((a, b) => {
+  if (a.featured && !b.featured) return -1;
+  if (!a.featured && b.featured) return 1;
+  return b.year - a.year;
+});
 ---
 
 <BaseLayout title="Gallery - Artist Portfolio">
@@ -19,7 +49,7 @@ const t = useTranslations('en');
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {artworks.map((artwork) => (
           <div 
-            id={artwork.id}
+            id={artwork.slug}
             class="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
           >
             <div class="aspect-[4/3] overflow-hidden relative">
@@ -48,20 +78,27 @@ const t = useTranslations('en');
                 <p><strong>Year:</strong> {artwork.year}</p>
               </div>
               
-              <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                <span class="font-bold text-accent text-2xl">
+              <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-primary">
                   €{artwork.price.toLocaleString()}
                 </span>
-                
                 {!artwork.sold && artwork.mollieLink && (
                   <a 
                     href={artwork.mollieLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="px-6 py-2 bg-primary text-white rounded-md hover:bg-gray-800 transition-colors font-medium"
+                    class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 transition-colors"
                   >
-                    {t('gallery.buy')}
+                    {t('gallery.buyNow')}
                   </a>
+                )}
+                {!artwork.sold && !artwork.mollieLink && (
+                  <button 
+                    class="bg-gray-300 text-gray-600 px-6 py-2 rounded-md cursor-not-allowed"
+                    disabled
+                  >
+                    {t('gallery.buyNow')}
+                  </button>
                 )}
               </div>
             </div>
@@ -70,15 +107,5 @@ const t = useTranslations('en');
       </div>
     </div>
   </section>
-  
-  <!-- Lightbox Modal (Simple CSS-only version) -->
-  <style>
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-  </style>
 </BaseLayout>
 
