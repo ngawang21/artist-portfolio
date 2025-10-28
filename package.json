@@ -12,8 +12,12 @@
     "@astrojs/mdx": "^4.3.8",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
+    "@mollie/api-client": "^4.3.3",
+    "@types/pdfkit": "^0.17.3",
     "astro": "^5.15.1",
     "astro-i18n-aut": "^0.7.3",
+    "pdfkit": "^0.17.2",
+    "resend": "^6.3.0",
     "sharp": "^0.34.4",
     "tailwindcss": "^3.4.18"
   },

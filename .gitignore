@@ -29,3 +29,8 @@ node_modules/
 .pnpm-store/
 dist/
 .astro/
+
+# Environment variables
+.env
+.env.local
+.env.*.local

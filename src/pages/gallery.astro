@@ -82,24 +82,15 @@ artworks.sort((a, b) => {
                 <span class="text-2xl font-bold text-primary">
                   €{artwork.price.toLocaleString()}
                 </span>
-                {!artwork.sold && artwork.mollieLink && (
+                {!artwork.sold && (
                   <a 
-                    href={artwork.mollieLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/checkout/${artwork.slug}`}
                     class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary/90 transition-colors"
                   >
                     {t('gallery.buyNow')}
                   </a>
                 )}
-                {!artwork.sold && !artwork.mollieLink && (
-                  <button 
-                    class="bg-gray-300 text-gray-600 px-6 py-2 rounded-md cursor-not-allowed"
-                    disabled
-                  >
-                    {t('gallery.buyNow')}
-                  </button>
-                )}
+
               </div>
             </div>
           </div>

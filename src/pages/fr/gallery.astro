@@ -83,11 +83,9 @@ const t = useTranslations('fr');
                   €{artwork.price.toLocaleString()}
                 </span>
                 
-                {!artwork.sold && artwork.mollieLink && (
+                {!artwork.sold && (
                   <a 
-                    href={artwork.mollieLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={`/fr/checkout/${artwork.slug}`}
                     class="px-6 py-2 bg-primary text-white rounded-md hover:bg-gray-800 transition-colors font-medium"
                   >
                     {t('gallery.buy')}

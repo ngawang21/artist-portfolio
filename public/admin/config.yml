@@ -3,9 +3,9 @@ backend:
   repo: ngawang21/artist-portfolio
   branch: main
   commit_messages:
-    create: 'Add {{collection}}: {{slug}}'
-    update: 'Update {{collection}}: {{slug}}'
-    delete: 'Delete {{collection}}: {{slug}}'
+    create: 'Add artwork: {{fields.title_en}}'
+    update: 'Update artwork: {{fields.title_en}}'
+    delete: 'Delete artwork: {{fields.title_en}}'
     uploadMedia: 'Upload {{path}}'
     deleteMedia: 'Delete {{path}}'
     openAuthoring: '{{message}}'
