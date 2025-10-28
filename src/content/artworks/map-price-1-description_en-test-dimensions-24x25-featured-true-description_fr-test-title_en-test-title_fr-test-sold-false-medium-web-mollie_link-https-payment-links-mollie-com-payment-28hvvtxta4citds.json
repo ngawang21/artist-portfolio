@@ -6,7 +6,7 @@
   "description_fr": "test",
   "title_en": "test",
   "title_fr": "test",
-  "sold": false,
+  "sold": true,
   "medium": "web",
   "mollie_link": "https://payment-links.mollie.com/payment/28HVVTXtA4ciTDSEYQD8w",
   "image": "/images/uploads/10901.webp",
