@@ -1,0 +1,99 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+import InstagramIcon from './InstagramIcon.astro';
+
+interface Props {
+  name: string;
+  role: string;
+  email: string;
+  instagram: string;
+  instagramHandle: string;
+}
+const { name, role, email, instagram, instagramHandle } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+
+const links = [
+  { href: localizePath('/works', lang), label: t('nav.works') },
+  { href: localizePath('/about', lang), label: t('nav.about') },
+  { href: localizePath('/contact', lang), label: t('nav.contact') },
+];
+---
+
+<footer class="footer">
+  <div class="u-wrap footer-grid">
+    <div>
+      <a href={localizePath('/', lang)} class="footer-name">{name}</a>
+      <p class="eyebrow footer-role">{role}</p>
+    </div>
+
+    <nav class="footer-nav" aria-label={t('footer.follow')}>
+      {links.map((l) => <a href={l.href} class="link-underline">{l.label}</a>)}
+    </nav>
+
+    <div class="footer-contact">
+      <a href={`mailto:${email}`} class="link-underline">{email}</a>
+      <a class="footer-ig" href={instagram} target="_blank" rel="noopener noreferrer">
+        <InstagramIcon class="h-4 w-4" />
+        <span>{instagramHandle}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="u-wrap footer-base">
+    <p class="eyebrow">© {year} {name}. {t('footer.rights')}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: clamp(4rem, 12vh, 9rem);
+    border-top: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vh, 4rem) 1.75rem;
+  }
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+  .footer-name {
+    font-family: var(--font);
+    font-size: 1.4rem;
+  }
+  .footer-role {
+    margin-top: 0.4rem;
+  }
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    color: var(--muted);
+  }
+  .footer-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .footer-ig:hover {
+      color: var(--ink);
+    }
+  }
+  .footer-base {
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1.5fr 1fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

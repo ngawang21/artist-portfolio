@@ -1,14 +1,19 @@
 <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex" />
-  <title>Content Manager</title>
-</head>
-<body>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager — Kunga Dempa Tsang</title>
+  </head>
+  <body>
+    <!--
+      Sveltia CMS — a fast, modern, drop-in successor to Decap CMS.
+      It reads /admin/config.yml and signs in with GitHub (see usage.md).
+      If you ever need the classic editor, comment the line below and
+      uncomment the Decap one — the same config.yml works for both.
+    -->
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <!-- <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script> -->
+  </body>
 </html>
-

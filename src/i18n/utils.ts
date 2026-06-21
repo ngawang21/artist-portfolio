@@ -1,101 +1,141 @@
-export const languages = {
-  en: 'English',
-  fr: 'Français',
-};
+import { DEFAULT_LOCALE, type Locale } from '../consts';
 
-export const defaultLang = 'en';
+const en = {
+  'skip.content': 'Skip to content',
 
-export const ui = {
-  en: {
-    'nav.home': 'Home',
-    'nav.gallery': 'Gallery',
-    'nav.about': 'About',
-    'nav.contact': 'Contact',
-    'nav.blog': 'Blog',
-    'home.hero.title': 'Contemporary Art from Paris',
-    'home.hero.subtitle': 'Explore unique paintings and artworks',
-    'home.featured': 'Featured Artworks',
-    'gallery.title': 'Gallery',
-    'gallery.dimensions': 'Dimensions',
-    'gallery.price': 'Price',
-    'gallery.buy': 'Buy Now',
-    'gallery.buyNow': 'Buy Now',
-    'gallery.sold': 'Sold',
-    'about.title': 'About the Artist',
-    'about.exhibitions': 'Exhibitions',
-    'about.statement': 'Artist Statement',
-    'contact.title': 'Get in Touch',
-    'contact.name': 'Name',
-    'contact.email': 'Email',
-    'contact.message': 'Message',
-    'contact.send': 'Send Message',
-    'contact.success': 'Message sent successfully!',
-    'footer.rights': 'All rights reserved',
-    'footer.follow': 'Follow',
-    'checkout.title': 'Checkout',
-    'checkout.artworkDetails': 'Artwork Details',
-    'checkout.customerInfo': 'Customer Information',
-    'checkout.name': 'Full Name',
-    'checkout.email': 'Email Address',
-    'checkout.phone': 'Phone Number',
-    'checkout.address': 'Address (Optional)',
-    'checkout.proceedToPayment': 'Proceed to Payment',
-    'checkout.total': 'Total',
-    'success.title': 'Payment Successful!',
-    'success.message': 'Thank you for your purchase. You will receive a confirmation email shortly.',
-    'success.invoiceNumber': 'Invoice Number',
-    'success.backToGallery': 'Back to Gallery',
-  },
-  fr: {
-    'nav.home': 'Accueil',
-    'nav.gallery': 'Galerie',
-    'nav.about': 'À propos',
-    'nav.contact': 'Contact',
-    'nav.blog': 'Blog',
-    'home.hero.title': 'Art Contemporain de Paris',
-    'home.hero.subtitle': 'Découvrez des peintures et œuvres uniques',
-    'home.featured': 'Œuvres en vedette',
-    'gallery.title': 'Galerie',
-    'gallery.dimensions': 'Dimensions',
-    'gallery.price': 'Prix',
-    'gallery.buy': 'Acheter',
-    'gallery.sold': 'Vendu',
-    'about.title': 'À propos de l\'artiste',
-    'about.exhibitions': 'Expositions',
-    'about.statement': 'Déclaration de l\'artiste',
-    'contact.title': 'Contactez-nous',
-    'contact.name': 'Nom',
-    'contact.email': 'Email',
-    'contact.message': 'Message',
-    'contact.send': 'Envoyer',
-    'contact.success': 'Message envoyé avec succès!',
-    'footer.rights': 'Tous droits réservés',
-    'footer.follow': 'Suivez',
-    'checkout.title': 'Paiement',
-    'checkout.artworkDetails': 'Détails de l\'œuvre',
-    'checkout.customerInfo': 'Informations client',
-    'checkout.name': 'Nom complet',
-    'checkout.email': 'Adresse e-mail',
-    'checkout.phone': 'Numéro de téléphone',
-    'checkout.address': 'Adresse (Optionnel)',
-    'checkout.proceedToPayment': 'Procéder au paiement',
-    'checkout.total': 'Total',
-    'success.title': 'Paiement réussi !',
-    'success.message': 'Merci pour votre achat. Vous recevrez un e-mail de confirmation sous peu.',
-    'success.invoiceNumber': 'Numéro de facture',
-    'success.backToGallery': 'Retour à la galerie',
-  },
+  'nav.home': 'Home',
+  'nav.works': 'Works',
+  'nav.about': 'About',
+  'nav.contact': 'Contact',
+  'nav.menu': 'Menu',
+  'nav.close': 'Close',
+
+  'home.viewWorks': 'View works',
+  'home.about': 'About the artist',
+  'home.scroll': 'Scroll',
+
+  'works.title': 'Works',
+  'works.intro': 'Paintings and works on paper, by year of production.',
+  'works.view': 'View',
+  'works.sold': 'Sold',
+  'works.views': 'views',
+  'works.empty': 'New works are on their way.',
+
+  'year.label': 'Year',
+  'year.browse': 'Browse by year',
+
+  'lightbox.close': 'Close',
+  'lightbox.prev': 'Previous image',
+  'lightbox.next': 'Next image',
+
+  'about.title': 'About',
+  'about.statement': 'Statement',
+  'about.biography': 'Biography',
+  'about.exhibitions': 'Exhibitions',
+  'about.viewExhibition': 'View exhibition',
+  'about.cta': 'Get in touch',
+
+  'contact.title': 'Contact',
+  'contact.intro':
+    'For acquisitions, commissions, or a studio visit, send a note — I read every message.',
+  'contact.name': 'Name',
+  'contact.email': 'Email',
+  'contact.message': 'Message',
+  'contact.required': 'required',
+  'contact.send': 'Send message',
+  'contact.success': 'Thank you — your message has been sent. I’ll reply soon.',
+  'contact.error': 'Something went wrong. Please email me directly at ',
+  'contact.ph.name': 'Your name',
+  'contact.ph.email': 'you@example.com',
+  'contact.ph.message': 'Your message…',
+  'contact.location': 'Based in',
+  'contact.elsewhere': 'Or reach me directly',
+
+  'backToTop': 'Back to top',
+
+  'footer.follow': 'Follow',
+  'footer.rights': 'All rights reserved.',
+
+  'seo.basedIn': 'based in',
 } as const;
 
-export function getLangFromUrl(url: URL) {
-  const [, lang] = url.pathname.split('/');
-  if (lang in ui) return lang as keyof typeof ui;
-  return defaultLang;
+const fr: Record<keyof typeof en, string> = {
+  'skip.content': 'Aller au contenu',
+
+  'nav.home': 'Accueil',
+  'nav.works': 'Œuvres',
+  'nav.about': 'À propos',
+  'nav.contact': 'Contact',
+  'nav.menu': 'Menu',
+  'nav.close': 'Fermer',
+
+  'home.viewWorks': 'Voir les œuvres',
+  'home.about': "À propos de l’artiste",
+  'home.scroll': 'Défiler',
+
+  'works.title': 'Œuvres',
+  'works.intro': 'Peintures et œuvres sur papier, par année de production.',
+  'works.view': 'Voir',
+  'works.sold': 'Vendu',
+  'works.views': 'vues',
+  'works.empty': 'De nouvelles œuvres arrivent bientôt.',
+
+  'year.label': 'Année',
+  'year.browse': 'Naviguer par année',
+
+  'lightbox.close': 'Fermer',
+  'lightbox.prev': 'Image précédente',
+  'lightbox.next': 'Image suivante',
+
+  'about.title': 'À propos',
+  'about.statement': 'Démarche',
+  'about.biography': 'Biographie',
+  'about.exhibitions': 'Expositions',
+  'about.viewExhibition': "Voir l'exposition",
+  'about.cta': 'Me contacter',
+
+  'contact.title': 'Contact',
+  'contact.intro':
+    "Pour une acquisition, une commande ou une visite d’atelier, écrivez-moi — je lis chaque message.",
+  'contact.name': 'Nom',
+  'contact.email': 'E-mail',
+  'contact.message': 'Message',
+  'contact.required': 'obligatoire',
+  'contact.send': 'Envoyer le message',
+  'contact.success': 'Merci — votre message a été envoyé. Je vous répondrai bientôt.',
+  'contact.error': 'Une erreur est survenue. Écrivez-moi directement à ',
+  'contact.ph.name': 'Votre nom',
+  'contact.ph.email': 'vous@exemple.com',
+  'contact.ph.message': 'Votre message…',
+  'contact.location': 'Basée à',
+  'contact.elsewhere': 'Ou contactez-moi directement',
+
+  'backToTop': 'Haut de page',
+
+  'footer.follow': 'Suivre',
+  'footer.rights': 'Tous droits réservés.',
+
+  'seo.basedIn': 'basée à',
+};
+
+const ui: Record<Locale, Record<string, string>> = { en, fr };
+
+export type UIKey = keyof typeof en;
+
+export function getLangFromUrl(url: URL): Locale {
+  const [, seg] = url.pathname.split('/');
+  return seg === 'fr' ? 'fr' : 'en';
 }
 
-export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: keyof typeof ui[typeof defaultLang]) {
-    return ui[lang][key] || ui[defaultLang][key];
+export function useTranslations(lang: Locale) {
+  return function t(key: UIKey): string {
+    return ui[lang][key] ?? ui[DEFAULT_LOCALE][key] ?? key;
   };
 }
 
+/** Prefix a root-relative path with the locale (no prefix for the default locale). */
+export function localizePath(path: string, lang: Locale): string {
+  const clean = '/' + path.replace(/^\/+/, '');
+  if (lang === DEFAULT_LOCALE) return clean;
+  return clean === '/' ? '/fr' : `/fr${clean}`;
+}

@@ -1,23 +1,24 @@
 {
-  "name": "astro-temp",
+  "name": "kunga-dempa-tsang-portfolio",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Portfolio website for the painter Kunga Dempa Tsang — Astro, bilingual EN/FR, PWA.",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "icons": "node scripts/generate-icons.mjs",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.8",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
-    "@mollie/api-client": "^4.3.3",
-    "@types/pdfkit": "^0.17.3",
+    "@fontsource-variable/fraunces": "^5.1.0",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource-variable/raleway": "^5.2.8",
+    "@vite-pwa/astro": "^0.5.0",
     "astro": "^5.15.1",
-    "astro-i18n-aut": "^0.7.3",
-    "pdfkit": "^0.17.2",
-    "resend": "^6.3.0",
     "sharp": "^0.34.4",
     "tailwindcss": "^3.4.18"
   },

@@ -1,4 +1,0 @@
----
-biography: Test
-statement: Test
----

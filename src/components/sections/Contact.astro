@@ -1,0 +1,199 @@
+---
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getProfile } from '../../lib/artworks';
+import InstagramIcon from '../InstagramIcon.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = await getProfile(lang);
+
+const formName = lang === 'fr' ? 'contact-fr' : 'contact';
+const req = t('contact.required');
+const ph = {
+  name: t('contact.ph.name'),
+  email: t('contact.ph.email'),
+  message: t('contact.ph.message'),
+};
+const errorMsg = t('contact.error') + p.email;
+---
+
+<section class="page-top u-wrap contact">
+  <header class="page-head">
+    <h1 class="page-title">{t('contact.title')}</h1>
+    <p class="page-intro">{t('contact.intro')}</p>
+  </header>
+
+  <div class="contact-grid">
+    <form
+      class="contact-form"
+      id="contact-form"
+      name={formName}
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/"
+    >
+      <input type="hidden" name="form-name" value={formName} />
+      <p class="hp" hidden>
+        <label>Leave this empty: <input name="bot-field" /></label>
+      </p>
+
+      <div class="field-row">
+        <label for="name">
+          {t('contact.name')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <input class="field" id="name" name="name" type="text" required aria-required="true" autocomplete="name" placeholder={ph.name} />
+      </div>
+
+      <div class="field-row">
+        <label for="email">
+          {t('contact.email')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <input class="field" id="email" name="email" type="email" required aria-required="true" autocomplete="email" placeholder={ph.email} />
+      </div>
+
+      <div class="field-row">
+        <label for="message">
+          {t('contact.message')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <textarea class="field" id="message" name="message" rows="5" required aria-required="true" placeholder={ph.message}></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit">{t('contact.send')}</button>
+      <p
+        class="form-status"
+        id="form-status"
+        role="status"
+        aria-live="polite"
+        data-success={t('contact.success')}
+        data-error={errorMsg}
+        hidden
+      >
+      </p>
+    </form>
+
+    <aside class="contact-aside">
+      <p class="eyebrow">{t('contact.elsewhere')}</p>
+      <a class="link-underline contact-line" href={`mailto:${p.email}`}>{p.email}</a>
+      {p.phone && (
+        <a class="link-underline contact-line" href={`tel:${p.phone.replace(/\s+/g, '')}`}>{p.phone}</a>
+      )}
+      <a class="contact-ig" href={p.instagram} target="_blank" rel="noopener noreferrer">
+        <InstagramIcon class="h-5 w-5" />
+        <span>{p.instagramHandle}</span>
+      </a>
+      <p class="contact-loc">
+        <span class="eyebrow">{t('contact.location')}</span>
+        <span class="contact-loc-value">{p.location}</span>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    max-width: 32rem;
+  }
+  .field-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .field-row label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .req {
+    color: var(--accent);
+  }
+  textarea.field {
+    resize: vertical;
+    min-height: 6rem;
+    line-height: 1.6;
+  }
+  .contact-form .btn {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+  }
+  .form-status {
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .form-status.is-success {
+    color: var(--ink);
+  }
+
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+  }
+  .contact-line {
+    font-size: 1.05rem;
+  }
+  .contact-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .contact-ig:hover {
+      color: var(--ink);
+    }
+  }
+  .contact-loc {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (submit) submit.disabled = true;
+      try {
+        const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = status.dataset.success ?? 'Sent.';
+        status.classList.add('is-success');
+      } catch {
+        status.textContent = status.dataset.error ?? 'Error.';
+        status.classList.remove('is-success');
+      } finally {
+        status.hidden = false;
+        if (submit) submit.disabled = false;
+      }
+    });
+  }
+</script>

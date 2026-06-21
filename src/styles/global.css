@@ -2,19 +2,192 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   Design tokens — "blue hour / liminal"
+   A cool fog ground lets the paintings carry the colour.
+   ============================================================ */
+:root {
+  --ground: #e7e8e6; /* pale cool fog */
+  --surface: #eeefec; /* slightly lighter fog for raised areas */
+  --ink: #1b2027; /* charcoal with a blue undertone */
+  --muted: #5b6168; /* slate grey for secondary text — 5.1:1 on ground (AA) */
+  --faint: #7c817a; /* faint grey — the year spine on Works — 3.2:1 (large text) */
+  --line: #d3d5d0; /* hairline divider */
+  --accent: #3d4c5e; /* deep dusk slate-blue */
+  --accent-hover: #2b3743;
+
+  /* One typeface — Raleway — carries the whole site (the artist's choice).
+     Hierarchy comes from weight, size, tracking and italic, not a second family. */
+  --font: 'Raleway Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Strong custom curves (Emil / review-animations standards) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --nav-h: 4.5rem;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --maxw: 88rem;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--nav-h);
   }
-  
   body {
-    @apply bg-white text-gray-900;
+    background-color: var(--ground);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 400;
+    font-synthesis: none;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font);
+    /* Light weight reads as an elegant gallery display in Raleway. */
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  /* Home is a single full-bleed painting — never scrolls (the artist's brief). */
+  body.is-home { overflow: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img, picture, svg { display: block; max-width: 100%; }
+  ::selection { background: var(--accent); color: var(--ground); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  :focus:not(:focus-visible) { outline: none; }
+}
+
+@layer components {
+  .u-wrap {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Small, wide-tracked uppercase label used for metadata + eyebrows.
+     Raleway is at its most refined in tracked uppercase — used for all labels. */
+  .eyebrow {
+    font-family: var(--font);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.6rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 160ms var(--ease-out), background-color 200ms ease,
+      color 200ms ease, border-color 200ms ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--accent); color: var(--ground); }
+  .btn-line { border-color: var(--ink); color: var(--ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-line:hover { background: var(--ink); color: var(--ground); }
+  }
+
+  /* Light, underline-style form fields */
+  .field {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    color: var(--ink);
+    transition: border-color 200ms ease;
+  }
+  .field::placeholder { color: var(--muted); }
+  .field:focus { outline: none; border-bottom-color: var(--accent); }
+
+  /* Animated link underline */
+  .link-underline {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 240ms var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .link-underline:hover { background-size: 100% 1px; }
+  }
+
+  /* Shared page scaffolding (Works / About / Contact) */
+  .page-top {
+    padding-top: calc(var(--nav-h) + clamp(2rem, 7vh, 5rem));
+    padding-bottom: 1rem;
+  }
+  .page-head {
+    max-width: 48rem;
+    margin-bottom: clamp(2rem, 6vh, 4rem);
+  }
+  .page-title {
+    font-size: clamp(2.25rem, 6vw, 4rem);
+  }
+  .page-intro {
+    margin-top: 1rem;
+    max-width: 42rem;
+    font-size: 1.05rem;
+    color: var(--muted);
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }
 
+/* ============================================================
+   Motion — progressive enhancement only.
+   `.js` is added to <html> before paint; without JS (or with
+   reduced motion) everything is visible and static.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

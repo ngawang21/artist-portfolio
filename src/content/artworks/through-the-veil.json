@@ -1,0 +1,21 @@
+{
+  "title_en": "Through the Veil",
+  "title_fr": "Through the Veil",
+  "year": 2025,
+  "medium_en": "Oil on wood",
+  "medium_fr": "Huile sur bois",
+  "dimensions": "28,3 × 60 cm",
+  "description_en": "A picnic table sits alone in a vivid green field at dusk, veiled in vertical rain-like strokes — an ordinary place made strange and luminous by the falling light.",
+  "description_fr": "Une table de pique-nique se tient seule dans un champ vert intense au crépuscule, voilée de traits verticaux comme la pluie — un lieu ordinaire rendu étrange et lumineux par la lumière déclinante.",
+  "image": "/images/uploads/works/through-the-veil/cover.webp",
+  "images": [
+    "/images/uploads/works/through-the-veil/02.webp",
+    "/images/uploads/works/through-the-veil/03.webp"
+  ],
+  "width": 2000,
+  "height": 988,
+  "alt_en": "Oil-on-wood nocturne of a picnic table in a luminous green field, veiled by vertical strokes.",
+  "alt_fr": "Nocturne à l'huile sur bois d'une table de pique-nique dans un champ vert lumineux, voilée de traits verticaux.",
+  "sold": false,
+  "order": 1
+}

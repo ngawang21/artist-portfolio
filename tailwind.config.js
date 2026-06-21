@@ -1,19 +1,29 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,md,ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        primary: '#1a1a1a',
-        secondary: '#f5f5f5',
-        accent: '#d4af37',
+        ground: 'var(--ground)',
+        surface: 'var(--surface)',
+        ink: 'var(--ink)',
+        muted: 'var(--muted)',
+        faint: 'var(--faint)',
+        line: 'var(--line)',
+        accent: 'var(--accent)',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        display: ['"Raleway Variable"', 'system-ui', 'sans-serif'],
+        sans: ['"Raleway Variable"', 'system-ui', 'sans-serif'],
+      },
+      letterSpacing: {
+        label: '0.18em',
+      },
+      transitionTimingFunction: {
+        out: 'cubic-bezier(0.23, 1, 0.32, 1)',
+        'in-out': 'cubic-bezier(0.77, 0, 0.175, 1)',
       },
     },
   },
   plugins: [],
-}
-
+};

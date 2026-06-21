@@ -1,0 +1,55 @@
+{
+  "name": "Kunga DEMPA TSANG",
+  "role_en": "Contemporary painter",
+  "role_fr": "Peintre contemporaine",
+  "tagline_en": "Paintings of liminal spaces and the suspended moments of everyday life.",
+  "tagline_fr": "Peintures des espaces liminaux et des instants suspendus du quotidien.",
+  "birthline_en": "1999 — Born in Tibet. Lives and works in Paris, France.",
+  "birthline_fr": "1999 — Née au Tibet. Vit et travaille à Paris, France.",
+  "statement_en": [
+    "In my paintings, what I have sought to capture are those suspended moments of everyday life, where solitude and contemplation meet.",
+    "I draw on liminal spaces — those places between the real and the imaginary — and try to translate them onto the canvas through light, texture, and layering.",
+    "I also want to make spaces where anyone can lose themselves, reinvent themselves, and question their relationship to time and space.",
+    "Lately I have been making many small drawings in dry pastel. They are gentler than my paintings, and let me approach these themes another way."
+  ],
+  "statement_fr": [
+    "Dans mes tableaux, ce que j'ai cherché à peindre, ce sont ces moments suspendus du quotidien, quand la solitude et la contemplation se mêlent.",
+    "Je me suis inspirée des espaces liminaux, ces lieux entre le réel et l'imaginaire. J'ai essayé de les traduire dans mes peintures à travers la lumière, les textures et les superpositions.",
+    "Mon envie, c'est aussi de créer des espaces où chacun peut se perdre, se réinventer, et interroger son rapport au temps et à l'espace.",
+    "En ce moment, je fais pas mal de petits dessins au pastel sec. C'est plus doux que mes peintures et ça me permet aussi d'aborder ces thèmes autrement."
+  ],
+  "bio_en": [
+    "Kunga Dempa Tsang is a contemporary painter based in Paris. Born in Markham, Tibet, her path took her through India before she settled in France, where she developed her distinctive voice.",
+    "In 2018 she began her artistic studies at Prép'art in Paris, then continued at the École Supérieure d'Art de Clermont Métropole, where she earned her DNSEP in June 2024 with the jury's honours.",
+    "Her work explores the boundary between the tangible and the imaginary, building atmospheric spaces that invite contemplation."
+  ],
+  "bio_fr": [
+    "Kunga Dempa Tsang est une peintre contemporaine basée à Paris. Née à Markham, au Tibet, son parcours l'a menée à travers l'Inde avant de s'installer en France, où elle a développé sa voix singulière.",
+    "En 2018, elle commence ses études artistiques à Prép'art à Paris, puis poursuit sa formation à l'École Supérieure d'Art de Clermont Métropole, où elle obtient son DNSEP en juin 2024, avec les félicitations du jury.",
+    "Son travail explore la frontière entre le tangible et l'imaginaire, créant des espaces atmosphériques qui invitent à la contemplation."
+  ],
+  "exhibitions": [
+    {
+      "year": "2025",
+      "title": "Double Trouble",
+      "detail_en": "Art Émergence, organised by Artagon — 17 September – 2 November 2025",
+      "detail_fr": "Art Émergence, organisée par Artagon — 17 septembre – 2 novembre 2025",
+      "link": "https://www.artagon.org/art-emergence-exposition/"
+    },
+    {
+      "year": "2023",
+      "title": "Ephemeral Space",
+      "detail_en": "In collaboration with Sœur Tokyo — Paris, France",
+      "detail_fr": "En collaboration avec Sœur Tokyo — Paris, France"
+    }
+  ],
+  "email": "dempatsang@gmail.com",
+  "phone": "+33 6 63 16 37 69",
+  "instagram": "https://www.instagram.com/kunga.dempa/",
+  "instagram_handle": "@kunga.dempa",
+  "location_en": "Paris, France",
+  "location_fr": "Paris, France",
+  "portrait": "/images/uploads/portrait.webp",
+  "hero_image": "/images/uploads/hero.webp",
+  "og_image": "/images/uploads/og.jpg"
+}

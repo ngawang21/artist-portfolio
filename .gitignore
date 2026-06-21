@@ -1,3 +1,6 @@
+data/
+.claude/
+
 # build output
 dist/
 # generated types
@@ -34,3 +37,12 @@ dist/
 .env
 .env.local
 .env.*.local
+
+# PWA / Vite dev service-worker output
+dev-dist/
+
+# Netlify local
+.netlify/
+
+# Claude Code personal settings
+.claude/settings.local.json

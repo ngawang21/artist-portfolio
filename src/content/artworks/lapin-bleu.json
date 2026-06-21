@@ -1,0 +1,21 @@
+{
+  "title_en": "Blue Rabbit",
+  "title_fr": "Lapin bleu",
+  "year": 2026,
+  "medium_en": "Oil and acrylic on wood",
+  "medium_fr": "Huile et acrylique sur bois",
+  "dimensions": "30 × 23 cm",
+  "description_en": "A small rabbit surfaces inside a luminous bubble, dissolving into pale blue light against a deep oxblood ground — a fragile apparition held for a moment before it fades.",
+  "description_fr": "Un petit lapin affleure dans une bulle lumineuse, se dissolvant dans une lumière bleu pâle sur un fond sang-de-bœuf — une apparition fragile retenue un instant avant de s'effacer.",
+  "image": "/images/uploads/works/lapin-bleu/cover.webp",
+  "images": [
+    "/images/uploads/works/lapin-bleu/02.webp",
+    "/images/uploads/works/lapin-bleu/03.webp"
+  ],
+  "width": 1576,
+  "height": 2000,
+  "alt_en": "Oil painting of a pale blue luminous oval holding a faint rabbit, on a dark oxblood wood panel.",
+  "alt_fr": "Peinture à l'huile d'un ovale lumineux bleu pâle contenant un lapin, sur un panneau de bois sang-de-bœuf.",
+  "sold": false,
+  "order": 1
+}

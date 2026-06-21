@@ -2,68 +2,154 @@ backend:
   name: github
   repo: ngawang21/artist-portfolio
   branch: main
+  # Saving does NOT redeploy the site (commits carry [skip ci]). Make all your
+  # edits, then publish them together in one go — see usage.md ("Publish").
+  # Set to false if you'd rather the site update automatically after each save.
+  skip_ci: true
   commit_messages:
-    create: 'Add artwork: {{fields.title_en}}'
-    update: 'Update artwork: {{fields.title_en}}'
-    delete: 'Delete artwork: {{fields.title_en}}'
-    uploadMedia: 'Upload {{path}}'
-    deleteMedia: 'Delete {{path}}'
-    openAuthoring: '{{message}}'
+    create: 'content: add {{slug}}'
+    update: 'content: update {{slug}}'
+    delete: 'content: remove {{slug}}'
+    uploadMedia: 'content: add image'
+    deleteMedia: 'content: remove image'
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+media_folder: 'public/images/uploads'
+public_folder: '/images/uploads'
 
 collections:
-  - name: "artworks"
-    label: "Artworks"
-    folder: "src/content/artworks"
+  - name: 'artworks'
+    label: 'Artworks'
+    label_singular: 'Artwork'
+    description: 'Each painting or work on paper. Add an image, a title and a year — the rest is optional.'
+    folder: 'src/content/artworks'
     create: true
-    slug: "{{slug}}"
-    extension: "json"
-    format: "json"
+    slug: '{{slug}}'
+    extension: 'json'
+    format: 'json'
+    identifier_field: 'title_en'
+    summary: '{{title_en}} — {{year}}'
+    sortable_fields: ['year', 'title_en']
+    view_groups:
+      - label: 'Year'
+        field: 'year'
     fields:
-      - { label: "Title (English)", name: "title_en", widget: "string" }
-      - { label: "Title (French)", name: "title_fr", widget: "string" }
-      - { label: "Description (English)", name: "description_en", widget: "text" }
-      - { label: "Description (French)", name: "description_fr", widget: "text" }
-      - { label: "Image", name: "image", widget: "image" }
-      - { label: "Dimensions", name: "dimensions", widget: "string" }
-      - { label: "Price (EUR)", name: "price", widget: "number" }
-      - { label: "Year", name: "year", widget: "number" }
-      - { label: "Medium", name: "medium", widget: "string" }
-      - { label: "Sold", name: "sold", widget: "boolean", default: false }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
-      - { label: "Mollie Payment Link", name: "mollie_link", widget: "string", required: false, hint: "Get your payment link from https://www.mollie.com/dashboard" }
+      - {
+          label: 'Cover image',
+          name: 'image',
+          widget: 'image',
+          hint: 'The main photo shown in the grid. Use a clear, straight-on photo cropped tight to the edges of the work (no wall around it).',
+        }
+      - {
+          label: 'More views (optional)',
+          name: 'images',
+          widget: 'image',
+          multiple: true,
+          required: false,
+          default: [],
+          hint: 'Extra angles, details or photos of the work in a room. Visitors swipe through these next to the cover.',
+        }
+      - { label: 'Title (English)', name: 'title_en', widget: 'string' }
+      - {
+          label: 'Title (French)',
+          name: 'title_fr',
+          widget: 'string',
+          required: false,
+          hint: 'Leave blank to reuse the English title.',
+        }
+      - { label: 'Year', name: 'year', widget: 'number', value_type: 'int', min: 1990, max: 2100 }
+      - { label: 'Medium (English)', name: 'medium_en', widget: 'string', hint: 'e.g. Oil on canvas' }
+      - {
+          label: 'Medium (French)',
+          name: 'medium_fr',
+          widget: 'string',
+          required: false,
+          hint: 'e.g. Huile sur toile',
+        }
+      - { label: 'Dimensions', name: 'dimensions', widget: 'string', required: false, hint: 'Height × width, e.g. 75 × 140 cm' }
+      - { label: 'Description (English)', name: 'description_en', widget: 'text', required: false }
+      - { label: 'Description (French)', name: 'description_fr', widget: 'text', required: false }
+      - {
+          label: 'Image alt text (English)',
+          name: 'alt_en',
+          widget: 'string',
+          required: false,
+          hint: 'A short description of the image, for accessibility and search engines.',
+        }
+      - { label: 'Image alt text (French)', name: 'alt_fr', widget: 'string', required: false }
+      - { label: 'Mark as sold', name: 'sold', widget: 'boolean', default: false, required: false }
+      - {
+          label: 'Order within the year',
+          name: 'order',
+          widget: 'number',
+          value_type: 'int',
+          required: false,
+          hint: 'Lower numbers appear first. Leave blank for automatic ordering.',
+        }
+      # Internal: exact cover pixel size, kept so the grid reserves the right
+      # frame. Set automatically for imported works; safe to ignore for new ones.
+      - { label: 'width', name: 'width', widget: 'hidden', required: false }
+      - { label: 'height', name: 'height', widget: 'hidden', required: false }
 
-  - name: "blog"
-    label: "Blog Posts"
-    folder: "src/pages/blog"
-    create: true
-    slug: "{{slug}}"
-    extension: "mdx"
-    format: "frontmatter"
-    fields:
-      - { label: "Layout", name: "layout", widget: "hidden", default: "../../layouts/BaseLayout.astro" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Featured Image", name: "image", widget: "image" }
-      - { label: "Body", name: "body", widget: "markdown" }
-
-  - name: "pages"
-    label: "Pages"
+  - name: 'profile'
+    label: 'Profile & About'
+    description: 'Your name, statement, biography, exhibitions and contact details.'
     files:
-      - label: "About Page (English)"
-        name: "about_en"
-        file: "src/content/pages/about_en.md"
+      - name: 'profile'
+        label: 'Profile / About page'
+        file: 'src/content/profile/profile.json'
         fields:
-          - { label: "Biography", name: "biography", widget: "markdown" }
-          - { label: "Artist Statement", name: "statement", widget: "text" }
-          
-      - label: "About Page (French)"
-        name: "about_fr"
-        file: "src/content/pages/about_fr.md"
-        fields:
-          - { label: "Biographie", name: "biography", widget: "markdown" }
-          - { label: "Déclaration de l'artiste", name: "statement", widget: "text" }
-
+          - { label: 'Name', name: 'name', widget: 'string' }
+          - { label: 'Role (English)', name: 'role_en', widget: 'string', hint: 'e.g. Contemporary painter' }
+          - { label: 'Role (French)', name: 'role_fr', widget: 'string' }
+          - { label: 'Tagline (English)', name: 'tagline_en', widget: 'text' }
+          - { label: 'Tagline (French)', name: 'tagline_fr', widget: 'text' }
+          - {
+              label: 'Birth line (English)',
+              name: 'birthline_en',
+              widget: 'string',
+              hint: 'Shown under your portrait, e.g. "1999 — Born in Tibet. Lives and works in Paris, France."',
+            }
+          - { label: 'Birth line (French)', name: 'birthline_fr', widget: 'string' }
+          - {
+              label: 'Statement (English)',
+              name: 'statement_en',
+              widget: 'list',
+              field: { label: 'Paragraph', name: 'paragraph', widget: 'text' },
+            }
+          - {
+              label: 'Statement (French)',
+              name: 'statement_fr',
+              widget: 'list',
+              field: { label: 'Paragraphe', name: 'paragraph', widget: 'text' },
+            }
+          - {
+              label: 'Biography (English)',
+              name: 'bio_en',
+              widget: 'list',
+              field: { label: 'Paragraph', name: 'paragraph', widget: 'text' },
+            }
+          - {
+              label: 'Biography (French)',
+              name: 'bio_fr',
+              widget: 'list',
+              field: { label: 'Paragraphe', name: 'paragraph', widget: 'text' },
+            }
+          - label: 'Exhibitions'
+            name: 'exhibitions'
+            widget: 'list'
+            summary: '{{fields.year}} — {{fields.title}}'
+            fields:
+              - { label: 'Year', name: 'year', widget: 'string' }
+              - { label: 'Title', name: 'title', widget: 'string' }
+              - { label: 'Detail (English)', name: 'detail_en', widget: 'string', required: false }
+              - { label: 'Detail (French)', name: 'detail_fr', widget: 'string', required: false }
+              - { label: 'Link', name: 'link', widget: 'string', required: false }
+          - { label: 'Email', name: 'email', widget: 'string' }
+          - { label: 'Phone', name: 'phone', widget: 'string', required: false }
+          - { label: 'Instagram URL', name: 'instagram', widget: 'string' }
+          - { label: 'Instagram handle', name: 'instagram_handle', widget: 'string' }
+          - { label: 'Location (English)', name: 'location_en', widget: 'string' }
+          - { label: 'Location (French)', name: 'location_fr', widget: 'string' }
+          - { label: 'Portrait photo', name: 'portrait', widget: 'image' }
+          - { label: 'Home hero image', name: 'hero_image', widget: 'image' }
+          - { label: 'Social share image (optional)', name: 'og_image', widget: 'image', required: false }

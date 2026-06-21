@@ -1,0 +1,148 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+interface Props {
+  years: number[];
+}
+const { years } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const label = t('year.label');
+const ariaLabel = t('year.browse');
+---
+
+<nav class="year-nav" aria-label={ariaLabel}>
+  <div class="u-wrap year-nav-inner">
+    <span class="year-nav-label eyebrow">{label}</span>
+    <ul class="year-nav-list">
+      {
+        years.map((y) => (
+          <li>
+            <a href={`#year-${y}`} class="year-link eyebrow" data-year={y}>
+              {y}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .year-nav {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 30;
+    margin-bottom: clamp(2rem, 6vh, 3.5rem);
+    background: color-mix(in srgb, var(--ground) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .year-nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    height: 3.25rem;
+  }
+  .year-nav-label {
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+  .year-nav-list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.4vw, 2rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .year-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+  .year-link {
+    position: relative;
+    display: block;
+    padding: 0.35rem 0;
+    color: var(--muted);
+    white-space: nowrap;
+    transition: color 220ms ease;
+  }
+  .year-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 240ms var(--ease-out);
+  }
+  .year-link.is-active {
+    color: var(--ink);
+  }
+  .year-link.is-active::after {
+    transform: scaleX(1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .year-link:hover {
+      color: var(--ink);
+    }
+  }
+  @media (max-width: 520px) {
+    .year-nav-label {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.year-link'));
+  const sections = links
+    .map((l) => document.getElementById(`year-${l.dataset.year}`))
+    .filter((el): el is HTMLElement => !!el);
+
+  if (links.length && sections.length) {
+    const setActive = (year: string | null) => {
+      for (const l of links) {
+        const on = l.dataset.year === year;
+        l.classList.toggle('is-active', on);
+        if (on) l.setAttribute('aria-current', 'true');
+        else l.removeAttribute('aria-current');
+      }
+    };
+
+    // Highlight the year whose section is crossing the upper third of the viewport.
+    const visible = new Map<string, number>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const year = e.target.id.replace('year-', '');
+          if (e.isIntersecting) visible.set(year, e.intersectionRatio);
+          else visible.delete(year);
+        }
+        if (visible.size) {
+          // The topmost section among those in view wins.
+          const topYear = sections
+            .map((s) => s.id.replace('year-', ''))
+            .find((y) => visible.has(y));
+          if (topYear) setActive(topYear);
+        }
+      },
+      { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.25, 0.5, 1] },
+    );
+    sections.forEach((s) => io.observe(s));
+
+    // Immediate feedback on click (don't wait for the scroll to settle).
+    links.forEach((l) => l.addEventListener('click', () => setActive(l.dataset.year ?? null)));
+
+    // Seed from a deep link (/works#year-2022) so the right year starts active.
+    const fromHash = location.hash.match(/^#year-(.+)$/)?.[1];
+    const seed = fromHash && links.some((l) => l.dataset.year === fromHash) ? fromHash : links[0]?.dataset.year;
+    setActive(seed ?? null);
+  }
+</script>

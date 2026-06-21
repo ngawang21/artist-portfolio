@@ -1,0 +1,20 @@
+{
+  "title_en": "Between Two Worlds",
+  "title_fr": "Entre deux mondes",
+  "year": 2024,
+  "medium_en": "Oil on canvas",
+  "medium_fr": "Huile sur toile",
+  "dimensions": "75 × 140 cm",
+  "description_en": "A blue interior opens onto a luminous screen reading “coming soon” — a threshold space between the real and the imagined, where the everyday tips quietly into dream.",
+  "description_fr": "Un intérieur bleu s'ouvre sur un écran lumineux où l'on lit « coming soon » — un espace-seuil entre le réel et l'imaginaire, où le quotidien bascule doucement dans le rêve.",
+  "image": "/images/uploads/works/entre-deux-mondes/cover.webp",
+  "images": [
+    "/images/uploads/works/entre-deux-mondes/02.webp"
+  ],
+  "width": 2000,
+  "height": 1073,
+  "alt_en": "Large blue interior scene with a window-like glowing screen — an oil painting of a liminal room at dusk.",
+  "alt_fr": "Grande scène d'intérieur bleue avec un écran lumineux semblable à une fenêtre — peinture à l'huile d'une pièce liminale au crépuscule.",
+  "sold": false,
+  "order": 1
+}

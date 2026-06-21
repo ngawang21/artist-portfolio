@@ -1,0 +1,20 @@
+{
+  "title_en": "Fluctuating Images",
+  "title_fr": "Images fluctuantes",
+  "year": 2024,
+  "medium_en": "Acrylic and oil on canvas",
+  "medium_fr": "Acrylique et huile sur toile",
+  "dimensions": "75 × 140 cm",
+  "description_en": "Translucent blooms drift and overlap across the canvas in magenta, violet and deep red — images that never settle, fluctuating between appearance and dissolution.",
+  "description_fr": "Des fleurs translucides dérivent et se superposent sur la toile en magenta, violet et rouge profond — des images qui ne se fixent jamais, fluctuant entre apparition et dissolution.",
+  "image": "/images/uploads/works/images-fluctuantes/cover.webp",
+  "images": [
+    "/images/uploads/works/images-fluctuantes/02.webp"
+  ],
+  "width": 2000,
+  "height": 1052,
+  "alt_en": "Abstract layered translucent flowers in magenta, violet and red — acrylic and oil on canvas.",
+  "alt_fr": "Fleurs translucides superposées et abstraites en magenta, violet et rouge — acrylique et huile sur toile.",
+  "sold": false,
+  "order": 2
+}
