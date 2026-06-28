@@ -1,0 +1,18 @@
+{
+  "image": "/images/uploads/ngawang.jpg",
+  "images": [
+    "/images/uploads/Photo - N (1).jpg"
+  ],
+  "title_en": "Test Ngawang EN",
+  "title_fr": "Test Ngawang FR",
+  "year": 2000,
+  "medium_en": "Test",
+  "medium_fr": "",
+  "dimensions": "50 x 50",
+  "description_en": "",
+  "description_fr": "",
+  "alt_en": "",
+  "alt_fr": "",
+  "sold": true,
+  "order": null
+}
