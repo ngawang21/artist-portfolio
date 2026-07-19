@@ -66,12 +66,14 @@ plus Search Console is what makes searches for *Kunga Dempa Tsang* find her.
 The contact page uses **Netlify Forms** (free: 100 submissions/month — ample). The form markup is
 correct and already deployed; the missing piece is **where the submissions go**. Do this once:
 
-1. **A clean deploy must succeed first.** Form *registration* happens during a successful deploy's
-   post-processing. Earlier deploys were failing (a blank CMS field broke the build — now fixed and
-   hardened in `src/content/config.ts`), so Netlify may never have registered the form. Trigger one
-   deploy from this repo, then continue.
+1. **A clean deploy must succeed first — with form detection already ON.** Form *registration*
+   happens during a successful deploy's post-processing: Netlify scans the built HTML **at deploy
+   time**. Enabling **Forms → form detection** *after* a deploy does nothing retroactively — the
+   forms only appear after the **next** deploy. So: enable form detection first, then trigger one
+   deploy (**Deploys → Trigger deploy → Deploy site**, the build hook, or any developer push).
 2. Netlify → **Forms**. You should see two forms: **`contact`** (English page) and **`contact-fr`**
-   (French page). If they're missing, confirm form detection is on and redeploy.
+   (French page). If they're missing, it's almost always the order-of-operations above — detection
+   was enabled after the last deploy; redeploy once.
 3. For **each** form → **Settings → Form notifications → Add notification → Email notification** →
    send to **`dempatsang@gmail.com`**. (Do it for both `contact` and `contact-fr`.)
 4. Test from the live site. On success the visitor sees a green toast with a **reference code**
