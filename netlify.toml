@@ -1,0 +1,35 @@
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+# submission-created.mjs — emails the reference + message copy to the visitor
+# and the artist after each contact-form submission (see docs/deployment.md §3c).
+[functions]
+  directory = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# NOTE: No SPA catch-all redirect here. Astro emits one static HTML file per
+# route; a `/*  ->  /index.html` rewrite would serve the home page for every
+# URL and break /works, /about, /fr/*, etc. Netlify Forms are detected
+# automatically from the deployed HTML (the form's `data-netlify` attribute).
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Keep the CMS out of search indexes (it is already noindex in markup).
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

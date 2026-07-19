@@ -1,0 +1,21 @@
+{
+  "title_en": "Through the Veil",
+  "title_fr": "Through the Veil",
+  "year": 2025,
+  "medium_en": "Oil on wood",
+  "medium_fr": "Huile sur bois",
+  "dimensions": "28,3 × 60 cm",
+  "description_en": "",
+  "description_fr": "",
+  "image": "/images/uploads/works/through-the-veil/cover.webp",
+  "images": [
+    "/images/uploads/works/through-the-veil/02.webp",
+    "/images/uploads/works/through-the-veil/03.webp"
+  ],
+  "width": 2000,
+  "height": 1078,
+  "alt_en": "Oil-on-wood nocturne of a picnic table in a luminous green field, veiled by vertical strokes.",
+  "alt_fr": "Nocturne à l'huile sur bois d'une table de pique-nique dans un champ vert lumineux, voilée de traits verticaux.",
+  "sold": false,
+  "order": 3
+}

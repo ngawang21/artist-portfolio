@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl } from '../i18n/utils';
+import { getAlternateLanguageUrl } from '../i18n/langToggle';
+
+const lang = getLangFromUrl(Astro.url);
+const href = getAlternateLanguageUrl(Astro.url.pathname, lang);
+const other = lang === 'en' ? 'FR' : 'EN';
+const label = lang === 'en' ? 'Voir en français' : 'View in English';
+---
+
+<a class="lang-toggle eyebrow" href={href} hreflang={lang === 'en' ? 'fr' : 'en'} aria-label={label}>
+  {other}
+</a>
+
+<style>
+  .lang-toggle {
+    padding: 0.3rem 0.1rem;
+    /* Slightly larger than the default eyebrow so the nav row reads comfortably. */
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lang-toggle:hover {
+      color: var(--ink);
+    }
+  }
+</style>

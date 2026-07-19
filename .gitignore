@@ -1,0 +1,53 @@
+data/
+.claude/
+
+# internal working notes (local-only, not part of the published repo)
+CLAUDE.md
+TODO.md
+docs/feedback-artist.md
+
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+node_modules/
+.local/
+.cache/
+.npm/
+.pnpm-store/
+dist/
+.astro/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# PWA / Vite dev service-worker output
+dev-dist/
+
+# Netlify local
+.netlify/
+
+# Claude Code personal settings
+.claude/settings.local.json

@@ -1,0 +1,168 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
+import { getProfile } from '../../lib/artworks';
+import InstagramIcon from '../InstagramIcon.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = await getProfile(lang);
+const viewLabel = t('about.viewExhibition');
+---
+
+<section class="page-top u-wrap about">
+  <header class="page-head about-head">
+    <h1 class="page-title">{t('about.title')}</h1>
+  </header>
+
+  <figure class="about-portrait" data-reveal>
+    <img src={p.portrait} alt={p.name} width="640" height="800" />
+    <figcaption class="eyebrow">{p.birthline}</figcaption>
+  </figure>
+
+  <div class="about-cols">
+    <section class="about-block" data-reveal>
+      <h2 class="eyebrow about-label">{t('about.statement')}</h2>
+      {p.statement.map((par) => <p>{par}</p>)}
+    </section>
+
+    <section class="about-block" data-reveal>
+      <h2 class="eyebrow about-label">{t('about.biography')}</h2>
+      {p.bio.map((par) => <p>{par}</p>)}
+    </section>
+  </div>
+
+  {
+    p.exhibitions.length > 0 && (
+      <section class="about-block exhibitions" data-reveal>
+        <h2 class="eyebrow about-label">{t('about.exhibitions')}</h2>
+        <ul class="exh-list">
+          {p.exhibitions.map((x) => (
+            <li class="exh">
+              <span class="exh-year">{x.year}</span>
+              <div class="exh-body">
+                <h3 class="exh-title">{x.title}</h3>
+                {x.detail && <p class="exh-detail">{x.detail}</p>}
+                {x.link && (
+                  <a class="link-underline exh-link" href={x.link} target="_blank" rel="noopener noreferrer">
+                    {viewLabel} ↗
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <div class="about-cta" data-reveal>
+    <a class="btn btn-line" href={localizePath('/contact', lang)}>{t('about.cta')}</a>
+    <a class="about-ig" href={p.instagram} target="_blank" rel="noopener noreferrer">
+      <InstagramIcon class="h-5 w-5" />
+      <span>{p.instagramHandle}</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  /* The portrait is the real hero of this page, so the title sits quietly above it. */
+  .about-head {
+    text-align: center;
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+    margin-inline: auto;
+  }
+  .about-portrait {
+    margin: 0 auto clamp(2.5rem, 7vh, 4.5rem);
+    max-width: 26rem;
+    text-align: center;
+  }
+  .about-portrait img {
+    width: 100%;
+    height: auto;
+    background: var(--surface);
+  }
+  .about-portrait figcaption {
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+  .about-cols {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+  .about-label {
+    padding-bottom: 0.85rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .about-block p {
+    font-family: var(--font);
+    font-size: 1.1rem;
+    line-height: 1.65;
+    max-width: 60ch;
+  }
+  .about-block p + p {
+    margin-top: 1rem;
+  }
+  .exhibitions {
+    max-width: 64rem;
+    margin: clamp(2.5rem, 7vh, 4.5rem) auto 0;
+  }
+  .exh-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .exh {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line);
+  }
+  .exh:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .exh-year {
+    font-family: var(--font);
+    font-size: 1.25rem;
+    color: var(--muted);
+  }
+  .exh-title {
+    font-size: 1.4rem;
+  }
+  .exh-detail {
+    margin-top: 0.35rem;
+    color: var(--muted);
+  }
+  .exh-link {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+  }
+  .about-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 7vh, 4.5rem);
+  }
+  .about-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .about-ig:hover {
+      color: var(--ink);
+    }
+  }
+  @media (min-width: 768px) {
+    .about-cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

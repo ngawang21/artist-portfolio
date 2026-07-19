@@ -1,0 +1,44 @@
+---
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getArtworksByYear } from '../../lib/artworks';
+import WorksByYear from '../WorksByYear.astro';
+import YearNav from '../YearNav.astro';
+import Lightbox from '../Lightbox.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const groups = await getArtworksByYear(lang);
+const years = groups.map((g) => g.year);
+---
+
+<section class="page-top u-wrap">
+  <header class="page-head">
+    <h1 class="page-title">{t('works.title')}</h1>
+    <p class="page-intro">{t('works.intro')}</p>
+  </header>
+</section>
+
+{years.length > 1 && <YearNav years={years} />}
+
+<section class="u-wrap works-body">
+  {
+    groups.length > 0 ? (
+      <WorksByYear groups={groups} />
+    ) : (
+      <p class="works-empty">{t('works.empty')}</p>
+    )
+  }
+</section>
+
+{groups.length > 0 && <Lightbox />}
+
+<style>
+  /* The year nav supplies the breathing room above the first year block. */
+  .works-body {
+    padding-bottom: 1rem;
+  }
+  .works-empty {
+    color: var(--muted);
+    font-size: 1.1rem;
+  }
+</style>

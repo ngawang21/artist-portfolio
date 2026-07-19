@@ -1,0 +1,257 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+import LanguageToggle from './LanguageToggle.astro';
+import InstagramIcon from './InstagramIcon.astro';
+
+interface Props {
+  name: string;
+  instagram: string;
+  /** Transparent white treatment, laid over the full-bleed home painting. */
+  transparent?: boolean;
+}
+const { name, instagram, transparent = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: localizePath('/works', lang), label: t('nav.works') },
+  { href: localizePath('/about', lang), label: t('nav.about') },
+  { href: localizePath('/contact', lang), label: t('nav.contact') },
+];
+const isActive = (href: string) => current === href.replace(/\/$/, '');
+---
+
+<header class:list={['nav', { 'is-overlay': transparent }]}>
+  <div class="nav-inner u-edge">
+    <a href={localizePath('/', lang)} class="nav-name">{name}</a>
+
+    <nav class="nav-links" aria-label={t('nav.menu')}>
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class:list={['nav-link', { 'is-active': isActive(l.href) }]}
+            aria-current={isActive(l.href) ? 'page' : undefined}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a class="nav-ig" href={instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <InstagramIcon class="h-[18px] w-[18px]" />
+      </a>
+      <LanguageToggle />
+    </nav>
+
+    <button
+      id="nav-toggle"
+      class="nav-burger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+      aria-label={t('nav.menu')}
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div id="nav-mobile" class="nav-mobile u-edge" hidden>
+    {
+      links.map((l) => (
+        <a
+          href={l.href}
+          class:list={['nav-mobile-link', { 'is-active': isActive(l.href) }]}
+          aria-current={isActive(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))
+    }
+    <div class="nav-mobile-foot">
+      <a href={instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <InstagramIcon class="h-5 w-5" />
+      </a>
+      <LanguageToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--ground) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 300ms ease, border-color 300ms ease;
+  }
+
+  /* Overlay (home): transparent over the painting, white text. */
+  .nav.is-overlay {
+    background: transparent;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+  .nav.is-overlay .nav-name {
+    color: #fff;
+    /* Home only: her name reads a touch larger than the nav labels (the artist's
+       ask). Clamped so it never crowds the burger on a narrow phone. */
+    font-size: clamp(1.25rem, 3.2vw, 1.4rem);
+  }
+  .nav.is-overlay .nav-link,
+  .nav.is-overlay .nav-ig,
+  .nav.is-overlay :global(.lang-toggle) {
+    color: rgba(244, 244, 241, 0.8);
+  }
+  .nav.is-overlay .nav-link.is-active {
+    color: #fff;
+  }
+  .nav.is-overlay .nav-burger span {
+    background: #fff;
+  }
+  .nav.is-overlay .nav-name,
+  .nav.is-overlay .nav-link,
+  .nav.is-overlay .nav-ig,
+  .nav.is-overlay :global(.lang-toggle) {
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.3);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nav.is-overlay .nav-link:hover,
+    .nav.is-overlay .nav-ig:hover,
+    .nav.is-overlay :global(.lang-toggle:hover) {
+      color: #fff;
+    }
+  }
+
+  /* Chrome hugs the viewport edges (not the centred content column) so the
+     header frames the page — fuliang.co reference, mirrored by the footer. */
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--nav-h);
+  }
+  .nav-name {
+    font-family: var(--font);
+    font-weight: 500;
+    /* The artist's rule: her name is the one thing set a bit larger than the
+       nav links — the links themselves stay at a comfortable reading size. */
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+  }
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  }
+  .nav-link {
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  .nav-link.is-active {
+    color: var(--ink);
+  }
+  .nav-ig {
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .nav-link:hover,
+    .nav-ig:hover {
+      color: var(--ink);
+    }
+  }
+
+  .nav-burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .nav-burger span {
+    display: block;
+    height: 1.5px;
+    width: 100%;
+    background: var(--ink);
+    transition: transform 200ms var(--ease-out), opacity 150ms ease;
+  }
+  .nav-burger[aria-expanded='true'] span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-burger[aria-expanded='true'] span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-burger[aria-expanded='true'] span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  .nav-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-block: 0.5rem 1.5rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--ground);
+  }
+  .nav-mobile[hidden] {
+    display: none;
+  }
+  /* Same current-page treatment as the desktop links: muted, active in ink. */
+  .nav-mobile-link {
+    font-family: var(--font);
+    font-size: 1.6rem;
+    padding: 0.4rem 0;
+    color: var(--muted);
+  }
+  .nav-mobile-link.is-active {
+    color: var(--ink);
+  }
+  .nav-mobile-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+    color: var(--muted);
+  }
+
+  @media (min-width: 768px) {
+    .nav-links {
+      display: flex;
+    }
+    .nav-burger,
+    .nav-mobile {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('nav-mobile');
+  if (toggle && panel) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+    };
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    panel.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

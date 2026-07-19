@@ -1,0 +1,20 @@
+{
+  "title_en": "Wallpaper",
+  "title_fr": "Papier peint",
+  "year": 2024,
+  "medium_en": "",
+  "medium_fr": "",
+  "dimensions": "",
+  "description_en": "",
+  "description_fr": "",
+  "image": "/images/uploads/works/papier-peint/cover.webp",
+  "images": [
+    "/images/uploads/works/papier-peint/02.webp"
+  ],
+  "width": 1537,
+  "height": 2000,
+  "alt_en": "Indigo painting of six hydrangea-like flower clusters repeating like wallpaper, with pale drips along the left edge.",
+  "alt_fr": "Peinture indigo de six bouquets d'hortensias répétés comme un papier peint, avec des coulures pâles sur le bord gauche.",
+  "sold": false,
+  "order": 5
+}

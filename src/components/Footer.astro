@@ -1,0 +1,30 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer u-edge">
+  <p class="eyebrow footer-rights">© {year} {name}. {t('footer.rights')}</p>
+</footer>
+
+<style>
+  /* Deliberately minimal: name, links and contact already sit in the top nav, so
+     the foot of the page carries only the copyright line (the artist's ask).
+     Like the nav, it hugs the viewport edges (--edge) rather than the content
+     column, so header and footer frame the page together. */
+  .footer {
+    margin-top: clamp(4rem, 12vh, 9rem);
+    border-top: 1px solid var(--line);
+    padding-block: 1.75rem;
+  }
+  .footer-rights {
+    color: var(--muted);
+  }
+</style>

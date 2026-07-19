@@ -1,0 +1,60 @@
+---
+import { getLangFromUrl } from '../../i18n/utils';
+import { getProfile } from '../../lib/artworks';
+
+const lang = getLangFromUrl(Astro.url);
+const p = await getProfile(lang);
+
+// One painting, full-bleed, nothing layered over it but the nav (fuliang.co
+// reference + the artist's brief: "one painting in the background, only the top
+// elements, no white border, no scroll"). The heading is present for SEO and
+// screen readers but visually hidden — the work is the whole first impression.
+const imgAlt = lang === 'fr' ? `Peinture de ${p.name}` : `Painting by ${p.name}`;
+---
+
+<section class="home" aria-label={p.name}>
+  <h1 class="sr-only">{p.name} — {p.role}, {p.location}</h1>
+  <img class="home-img" src={p.heroImage} alt={imgAlt} fetchpriority="high" decoding="async" />
+  <span class="home-scrim" aria-hidden="true"></span>
+</section>
+
+<style>
+  .home {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    height: 100dvh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .home-img {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The painting simply resolves in — opacity only, so it never softens. */
+    animation: home-in 900ms var(--ease-out) both;
+  }
+  /* Soft dusk wash at the top only — keeps the white nav legible over any
+     painting without adding a visible band or "border". */
+  .home-scrim {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: -1;
+    height: 38vh;
+    background: linear-gradient(180deg, rgba(11, 13, 17, 0.5) 0%, rgba(11, 13, 17, 0) 100%);
+    pointer-events: none;
+  }
+  @keyframes home-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-img {
+      animation: none;
+    }
+  }
+</style>

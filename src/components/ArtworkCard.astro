@@ -1,0 +1,183 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import type { LocalizedArtwork } from '../lib/artworks';
+
+interface Props {
+  art: LocalizedArtwork;
+  loading?: 'lazy' | 'eager';
+  /** Index within the year — drives a short ordered reveal stagger. */
+  delay?: number;
+}
+const { art, loading = 'lazy', delay = 0 } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const meta = [art.medium, art.dimensions].filter(Boolean).join(' · ');
+const count = art.images.length;
+const viewsLabel = t('works.views');
+---
+
+<figure
+  class="art"
+  style={`--ar:${art.ratio.toFixed(4)}; --rd:${Math.min(delay, 6) * 45}ms`}
+  data-reveal
+  data-ar-auto={art.ratioFixed ? undefined : ''}
+>
+  <button
+    class="art-trigger"
+    type="button"
+    aria-label={`${t('works.view')} — ${art.title}, ${art.year}${count > 1 ? ` (${count} ${viewsLabel})` : ''}`}
+    data-images={JSON.stringify(art.images)}
+    data-alt={art.alt}
+    data-title={art.title}
+    data-year={String(art.year)}
+    data-meta={meta}
+    data-description={art.description ?? ''}
+    data-sold={art.sold ? '1' : ''}
+  >
+    <span class="art-frame">
+      <img src={art.image} alt={art.alt} loading={loading} decoding="async" />
+      {art.sold && <span class="art-sold eyebrow">{t('works.sold')}</span>}
+      {count > 1 && (
+        <span class="art-views eyebrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+            <rect x="8" y="3" width="13" height="13" rx="2" />
+            <rect x="3" y="8" width="13" height="13" rx="2" />
+          </svg>
+          {count}
+        </span>
+      )}
+    </span>
+  </button>
+  <figcaption class="art-cap">
+    <span class="art-line"><span class="art-title">{art.title}</span><span class="art-year">, {art.year}</span></span>
+    {meta && <span class="art-meta eyebrow">{meta}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .art {
+    /* Every work in a row resolves to the same height (--art-rowh); width
+       follows its aspect ratio. Uniform gaps, consistent rows — never ragged. */
+    flex: 0 1 auto;
+    width: min(100%, calc(var(--ar) * var(--art-rowh)));
+    margin: 0;
+  }
+  /* Ordered cascade as a row reveals, instead of cards popping in raggedly. */
+  :global(.js) .art[data-reveal] {
+    transition-delay: var(--rd, 0ms);
+  }
+  /* On phones a single column reads best — each work fills the width. */
+  @media (max-width: 600px) {
+    .art {
+      width: 100%;
+    }
+  }
+  .art-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: left;
+    cursor: zoom-in;
+    color: inherit;
+  }
+  .art-frame {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--ar);
+    background: var(--surface);
+  }
+  .art-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 450ms var(--ease-out);
+  }
+  .art-sold {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--ground) 88%, transparent);
+    backdrop-filter: blur(4px);
+  }
+  .art-views {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.22rem 0.5rem;
+    color: #f4f4f1;
+    background: color-mix(in srgb, var(--ink) 45%, transparent);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
+  }
+  .art-views svg {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+  /* No hover on touch — keep the multi-view hint visible there. */
+  @media (hover: none) {
+    .art-views {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .art-cap {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .art-line {
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+  .art-title {
+    /* The artist's rule: artwork titles are set in italic. */
+    font-style: italic;
+    font-weight: 400;
+  }
+  .art-year {
+    color: var(--muted);
+  }
+  .art-meta {
+    color: var(--muted);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .art-trigger:hover .art-frame img {
+      transform: scale(1.035);
+    }
+    .art-trigger:hover .art-views {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Works without an exact stored pixel size (e.g. images uploaded through the
+  // CMS) get their frame's aspect-ratio from the loaded image's intrinsic size,
+  // so the cover is shown whole — never cropped (the artist's "keep original
+  // dimensions" rule). Curated works already carry exact dims, so they're skipped.
+  const fit = (img: HTMLImageElement) => {
+    const fig = img.closest('.art') as HTMLElement | null;
+    if (fig && img.naturalWidth && img.naturalHeight) {
+      fig.style.setProperty('--ar', (img.naturalWidth / img.naturalHeight).toFixed(4));
+    }
+  };
+  document
+    .querySelectorAll<HTMLImageElement>('.art[data-ar-auto] .art-frame img')
+    .forEach((img) => {
+      if (img.complete) fit(img);
+      else img.addEventListener('load', () => fit(img), { once: true });
+    });
+</script>

@@ -1,0 +1,152 @@
+---
+// Raleway — the artist's chosen typeface. Self-hosted (no Google Fonts CDN),
+// upright + italic, full 100–900 weight axis. Italic carries the artwork titles.
+import '@fontsource-variable/raleway/wght.css';
+import '@fontsource-variable/raleway/wght-italic.css';
+import '../styles/global.css';
+
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+import Seo from '../components/Seo.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getProfile } from '../lib/artworks';
+import { SITE } from '../consts';
+
+interface Props {
+  page?: 'home' | 'works' | 'about' | 'contact' | '404';
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { page = 'home', title, description, image } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const profile = await getProfile(lang);
+
+const pageTitleText =
+  title ??
+  (page === 'home'
+    ? null
+    : page === 'works'
+      ? t('works.title')
+      : page === 'about'
+        ? t('about.title')
+        : t('contact.title'));
+
+const fullTitle = pageTitleText
+  ? `${pageTitleText} — ${profile.name}`
+  : `${profile.name} — ${profile.role}, ${profile.location}`;
+
+const descriptions: Record<string, string> = {
+  home: `${profile.role} ${t('seo.basedIn')} ${profile.location}. ${profile.tagline}`,
+  works: t('works.intro'),
+  about: profile.bio[0] ?? profile.tagline,
+  contact: t('contact.intro'),
+};
+const metaDescription = (description ?? descriptions[page] ?? profile.tagline).slice(0, 300);
+
+const toAbs = (u: string) => (/^https?:\/\//.test(u) ? u : new URL(u, Astro.site).href);
+const withSlash = (p: string) => (p === '/' ? '/' : `${p}/`);
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isFr = lang === 'fr';
+const enPath = isFr ? path.replace(/^\/fr/, '') || '/' : path;
+const frPath = isFr ? path : path === '/' ? '/fr' : `/fr${path}`;
+const canonical = toAbs(withSlash(path));
+
+// Prefer a stable, on-domain share card; fall back to the chosen hero only if needed.
+const ogSource = image || (profile.ogImage && profile.ogImage.trim()) || SITE.defaultOgImage;
+const ogImage = toAbs(ogSource);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Search Console verification (kungadempatsang.com). -->
+    <meta name="google-site-verification" content="kp9btrZz9jgQmgDIhS4gKUu_esBsyHuZZo8__ZPp7t8" />
+    <meta name="author" content={profile.name} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#E7E8E6" />
+
+    <Seo
+      lang={lang}
+      title={fullTitle}
+      description={metaDescription}
+      canonical={canonical}
+      ogImage={ogImage}
+      enHref={toAbs(withSlash(enPath))}
+      frHref={toAbs(withSlash(frPath))}
+      name={profile.name}
+      role={profile.role}
+      location={profile.location}
+      instagram={profile.instagram}
+      siteUrl={SITE.url}
+    />
+  </head>
+
+  <body class:list={{ 'is-home': page === 'home' }}>
+    <a href="#main" class="skip-link">{t('skip.content')}</a>
+    <Nav name={profile.name} instagram={profile.instagram} transparent={page === 'home'} />
+    <main id="main">
+      <slot />
+    </main>
+    {
+      page !== 'home' && (
+        <>
+          <Footer name={profile.name} />
+          <BackToTop />
+        </>
+      )
+    }
+
+    <style>
+      .skip-link {
+        position: fixed;
+        top: 0.5rem;
+        left: 0.5rem;
+        z-index: 100;
+        padding: 0.6rem 1rem;
+        background: var(--ink);
+        color: var(--ground);
+        transform: translateY(-150%);
+        transition: transform 180ms var(--ease-out);
+      }
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+    </style>
+
+    <script>
+      const els = document.querySelectorAll('[data-reveal]');
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

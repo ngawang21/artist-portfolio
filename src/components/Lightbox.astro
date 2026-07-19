@@ -1,0 +1,384 @@
+---
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const close = t('lightbox.close');
+const prev = t('lightbox.prev');
+const next = t('lightbox.next');
+---
+
+<dialog id="lightbox" class="lightbox" aria-label={t('works.title')} data-sold-label={t('works.sold')}>
+  <button class="lb-btn lb-close" type="button" aria-label={close} data-lb-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  <button class="lb-btn lb-prev" type="button" aria-label={prev} data-lb-prev>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </button>
+  <figure class="lb-figure">
+    <div class="lb-stage">
+      <img id="lb-img" alt="" />
+    </div>
+    <div class="lb-dots" id="lb-dots" aria-hidden="true"></div>
+    <figcaption id="lb-cap" class="lb-cap" aria-live="polite"></figcaption>
+    <p id="lb-desc" class="lb-desc"></p>
+  </figure>
+  <button class="lb-btn lb-next" type="button" aria-label={next} data-lb-next>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </button>
+</dialog>
+
+<style>
+  .lightbox {
+    margin: auto;
+    max-width: min(94vw, 1180px);
+    max-height: 94vh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ground);
+    overflow: visible;
+  }
+  .lightbox::backdrop {
+    background: color-mix(in srgb, var(--ink) 84%, transparent);
+    backdrop-filter: blur(3px);
+  }
+  .lb-figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .lb-stage {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    touch-action: pan-y;
+  }
+  #lb-img {
+    max-width: 100%;
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background: var(--surface);
+    user-select: none;
+    -webkit-user-drag: none;
+    transition: opacity 220ms var(--ease-out);
+  }
+  #lb-img.is-swapping {
+    opacity: 0;
+  }
+  .lb-dots {
+    display: flex;
+    gap: 0.5rem;
+    min-height: 0.5rem;
+  }
+  .lb-dots:empty {
+    display: none;
+  }
+  .lb-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--ground) 40%, transparent);
+    cursor: pointer;
+    transition: background-color 200ms ease, transform 200ms var(--ease-out);
+  }
+  .lb-dot.is-active {
+    background: var(--ground);
+    transform: scale(1.15);
+  }
+  .lb-cap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem 0.85rem;
+    text-align: center;
+    color: var(--ground);
+  }
+  .lb-cap :global(.lb-title) {
+    font-style: italic;
+    font-size: 1.15rem;
+  }
+  .lb-cap :global(.lb-meta) {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.78;
+  }
+  .lb-desc {
+    max-width: 60ch;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--ground) 82%, transparent);
+  }
+  .lb-desc[hidden] {
+    display: none;
+  }
+  .lb-btn {
+    position: fixed;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    color: var(--ground);
+    background: color-mix(in srgb, var(--ink) 35%, transparent);
+    border: 0;
+    cursor: pointer;
+    transition: background-color 200ms ease, transform 160ms var(--ease-out);
+  }
+  .lb-btn svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .lb-btn:active {
+    transform: scale(0.94);
+  }
+  .lb-btn[hidden] {
+    display: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .lb-btn:hover {
+      background: color-mix(in srgb, var(--ink) 55%, transparent);
+    }
+  }
+  .lb-close {
+    top: clamp(0.75rem, 3vw, 1.75rem);
+    right: clamp(0.75rem, 3vw, 1.75rem);
+  }
+  .lb-prev {
+    left: clamp(0.5rem, 2vw, 1.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .lb-prev:active {
+    transform: translateY(-50%) scale(0.94);
+  }
+  .lb-next {
+    right: clamp(0.5rem, 2vw, 1.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .lb-next:active {
+    transform: translateY(-50%) scale(0.94);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] {
+      animation: lb-in 200ms var(--ease-out);
+    }
+    .lightbox[open]::backdrop {
+      animation: lb-fade 200ms var(--ease-out);
+    }
+    @keyframes lb-in {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+    }
+    @keyframes lb-fade {
+      from {
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+  const img = document.getElementById('lb-img') as HTMLImageElement | null;
+  const cap = document.getElementById('lb-cap');
+  const descEl = document.getElementById('lb-desc');
+  const dotsEl = document.getElementById('lb-dots');
+  const prevBtn = dialog?.querySelector<HTMLButtonElement>('[data-lb-prev]') ?? null;
+  const nextBtn = dialog?.querySelector<HTMLButtonElement>('[data-lb-next]') ?? null;
+
+  if (dialog && img && cap) {
+    const soldLabel = dialog.dataset.soldLabel || 'Sold';
+    const triggers = Array.from(document.querySelectorAll<HTMLElement>('.art-trigger'));
+
+    type Slide = {
+      src: string;
+      alt: string;
+      title: string;
+      year: string;
+      meta: string;
+      desc: string;
+      sold: boolean;
+      workStart: number;
+      idxInWork: number;
+      countInWork: number;
+    };
+
+    // Flatten every work's images into one horizontal sequence. A work's views
+    // sit next to each other, so arrows/swipe move smoothly within a work and
+    // then on to the next — a continuous catalogue.
+    const slides: Slide[] = [];
+    const triggerStart: number[] = [];
+    triggers.forEach((el, ti) => {
+      let imgs: string[] = [];
+      try {
+        imgs = JSON.parse(el.dataset.images || '[]');
+      } catch {
+        imgs = [];
+      }
+      if (!imgs.length && el.dataset.image) imgs = [el.dataset.image];
+      triggerStart[ti] = slides.length;
+      const start = slides.length;
+      imgs.forEach((src, k) =>
+        slides.push({
+          src,
+          alt: el.dataset.alt || '',
+          title: el.dataset.title || '',
+          year: el.dataset.year || '',
+          meta: el.dataset.meta || '',
+          desc: el.dataset.description || '',
+          sold: !!el.dataset.sold,
+          workStart: start,
+          idxInWork: k,
+          countInWork: imgs.length,
+        }),
+      );
+    });
+
+    let idx = -1;
+    let reqId = 0;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const renderDots = (s: Slide) => {
+      if (!dotsEl) return;
+      dotsEl.replaceChildren();
+      if (s.countInWork <= 1) return;
+      for (let k = 0; k < s.countInWork; k++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        // Mouse-only pagination; keyboard users navigate with the arrows.
+        dot.tabIndex = -1;
+        dot.className = 'lb-dot' + (k === s.idxInWork ? ' is-active' : '');
+        dot.addEventListener('click', () => render(s.workStart + k));
+        dotsEl.appendChild(dot);
+      }
+    };
+
+    const paint = (s: Slide) => {
+      img.src = s.src;
+      img.alt = s.alt;
+      const titleText = [s.title, s.year].filter(Boolean).join(', ');
+      dialog.setAttribute('aria-label', titleText);
+
+      cap.replaceChildren();
+      const title = document.createElement('span');
+      title.className = 'lb-title';
+      title.textContent = titleText;
+      cap.appendChild(title);
+      const metaParts = [s.meta, s.sold ? soldLabel : ''].filter(Boolean);
+      if (metaParts.length) {
+        const meta = document.createElement('span');
+        meta.className = 'lb-meta';
+        meta.textContent = metaParts.join(' · ');
+        cap.appendChild(meta);
+      }
+      if (descEl) {
+        descEl.textContent = s.desc;
+        descEl.hidden = !s.desc;
+      }
+      renderDots(s);
+    };
+
+    const render = (i: number) => {
+      if (!slides.length) return;
+      const n = ((i % slides.length) + slides.length) % slides.length;
+      idx = n;
+      const token = ++reqId;
+      const s = slides[n];
+      if (reduce) {
+        paint(s);
+        return;
+      }
+      // Brief fade swap so consecutive views don't jump-cut. A request token
+      // discards stale preloads so rapid navigation can't desync the view.
+      img.classList.add('is-swapping');
+      const pre = new Image();
+      const show = () => {
+        if (token !== reqId) return;
+        paint(s);
+        requestAnimationFrame(() => {
+          if (token === reqId) img.classList.remove('is-swapping');
+        });
+      };
+      pre.onload = show;
+      pre.onerror = show;
+      pre.src = s.src;
+    };
+
+    const step = (delta: number) => render(idx + delta);
+    const multi = slides.length > 1;
+    if (prevBtn) prevBtn.hidden = !multi;
+    if (nextBtn) nextBtn.hidden = !multi;
+
+    triggers.forEach((el, ti) =>
+      el.addEventListener('click', () => {
+        render(triggerStart[ti]);
+        if (!dialog.open) dialog.showModal();
+      }),
+    );
+
+    dialog.querySelector('[data-lb-close]')?.addEventListener('click', () => dialog.close());
+    prevBtn?.addEventListener('click', () => step(-1));
+    nextBtn?.addEventListener('click', () => step(1));
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!dialog.open) return;
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'ArrowRight') step(1);
+    });
+
+    // Swipe (touch / pointer) on the image stage. Pointer capture keeps the
+    // gesture alive even if the finger lifts off the stage or over an arrow.
+    const stage = dialog.querySelector<HTMLElement>('.lb-stage');
+    if (stage && multi) {
+      let startX = 0;
+      let startY = 0;
+      let tracking = false;
+      stage.addEventListener(
+        'pointerdown',
+        (e) => {
+          const pe = e as PointerEvent;
+          tracking = true;
+          startX = pe.clientX;
+          startY = pe.clientY;
+          try {
+            stage.setPointerCapture(pe.pointerId);
+          } catch {}
+        },
+        { passive: true },
+      );
+      const finish = (e: Event) => {
+        if (!tracking) return;
+        tracking = false;
+        const pe = e as PointerEvent;
+        const dx = pe.clientX - startX;
+        const dy = pe.clientY - startY;
+        if (Math.abs(dx) > 44 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+      };
+      stage.addEventListener('pointerup', finish);
+      stage.addEventListener('pointercancel', () => {
+        tracking = false;
+      });
+    }
+  }
+</script>

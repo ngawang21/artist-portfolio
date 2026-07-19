@@ -1,0 +1,319 @@
+---
+import { getLangFromUrl, useTranslations, localizePath } from '../../i18n/utils';
+import { getProfile } from '../../lib/artworks';
+import InstagramIcon from '../InstagramIcon.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const p = await getProfile(lang);
+
+const formName = lang === 'fr' ? 'contact-fr' : 'contact';
+const req = t('contact.required');
+const ph = {
+  name: t('contact.ph.name'),
+  email: t('contact.ph.email'),
+  message: t('contact.ph.message'),
+};
+const errorMsg = t('contact.error') + p.email;
+// Native (no-JS) submissions only: Netlify redirects here after storing the
+// message. Same page, right locale; the #form-sent target reveals the note.
+const sentAction = `${localizePath('/contact', lang)}#form-sent`;
+---
+
+<section class="page-top u-wrap contact">
+  <header class="page-head">
+    <h1 class="page-title">{t('contact.title')}</h1>
+    <p class="page-intro">{t('contact.intro')}</p>
+  </header>
+
+  <!-- Shown only when a native (no-JS) submission lands back here via #form-sent. -->
+  <p id="form-sent" class="form-sent" role="status">
+    {t('contact.sent')} — {t('contact.success')}
+  </p>
+
+  <div class="contact-grid">
+    <form
+      class="contact-form"
+      id="contact-form"
+      name={formName}
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action={sentAction}
+      data-sent-title={t('contact.sent')}
+      data-sent-body={t('contact.success')}
+      data-fail-title={t('contact.sendFail')}
+      data-fail-body={errorMsg}
+      data-ref-label={t('contact.reference')}
+      data-copy={t('contact.copy')}
+      data-copied={t('contact.copied')}
+      data-dismiss={t('contact.dismiss')}
+    >
+      <input type="hidden" name="form-name" value={formName} />
+      <!-- Filled in by JS at submit time so the same trace code is stored with the
+           submission (and emailed to the artist) and shown back to the visitor. -->
+      <input type="hidden" name="reference" id="contact-ref" />
+      <p class="hp" hidden>
+        <label>Leave this empty: <input name="bot-field" /></label>
+      </p>
+
+      <div class="field-row">
+        <label for="name">
+          {t('contact.name')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <input class="field" id="name" name="name" type="text" required aria-required="true" autocomplete="name" placeholder={ph.name} />
+      </div>
+
+      <div class="field-row">
+        <label for="email">
+          {t('contact.email')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <input class="field" id="email" name="email" type="email" required aria-required="true" autocomplete="email" placeholder={ph.email} />
+      </div>
+
+      <div class="field-row">
+        <label for="message">
+          {t('contact.message')} <span class="req" aria-hidden="true">*</span><span class="sr-only">({req})</span>
+        </label>
+        <textarea class="field" id="message" name="message" rows="5" required aria-required="true" placeholder={ph.message}></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit">{t('contact.send')}</button>
+    </form>
+
+    <aside class="contact-aside">
+      <p class="eyebrow">{t('contact.elsewhere')}</p>
+      <a class="link-underline contact-line" href={`mailto:${p.email}`}>{p.email}</a>
+      {p.phone && (
+        <a class="link-underline contact-line" href={`tel:${p.phone.replace(/\s+/g, '')}`}>{p.phone}</a>
+      )}
+      <a class="contact-ig" href={p.instagram} target="_blank" rel="noopener noreferrer">
+        <InstagramIcon class="h-5 w-5" />
+        <span>{p.instagramHandle}</span>
+      </a>
+      <p class="contact-loc">
+        <span class="eyebrow">{t('contact.location')}</span>
+        <span class="contact-loc-value">{p.location}</span>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- Live region for the success / error toast (styles + injection are global).
+     aria-live lives on this PERSISTENT container so a newly-injected success toast
+     is announced (a polite role on the freshly-added node often isn't). Errors get
+     role="alert" on the toast itself for assertive interruption. -->
+<div id="toast-region" class="toast-region" aria-live="polite" aria-relevant="additions" aria-atomic="false"></div>
+
+<style>
+  .form-sent {
+    display: none;
+    max-width: 32rem;
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+    padding: 0.85rem 1.1rem;
+    border-left: 3px solid var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+  }
+  .form-sent:target {
+    display: block;
+  }
+
+  .contact-grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    max-width: 32rem;
+  }
+  .field-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .field-row label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .req {
+    color: var(--accent);
+  }
+  textarea.field {
+    resize: vertical;
+    min-height: 6rem;
+    line-height: 1.6;
+  }
+  .contact-form .btn {
+    align-self: flex-start;
+    margin-top: 0.25rem;
+  }
+
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+  }
+  .contact-line {
+    font-size: 1.05rem;
+  }
+  .contact-ig {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .contact-ig:hover {
+      color: var(--ink);
+    }
+  }
+  .contact-loc {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  @media (min-width: 768px) {
+    .contact-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+  }
+</style>
+
+<script>
+  import { makeRef } from '../../lib/reference.mjs';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const region = document.getElementById('toast-region');
+  const refField = document.getElementById('contact-ref') as HTMLInputElement | null;
+
+  if (form && region) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const str = (k: string, fb = '') => form.dataset[k] ?? fb;
+
+    type ToastOpts = { kind: 'success' | 'error'; title: string; body: string; reference?: string };
+
+    const showToast = ({ kind, title, body, reference }: ToastOpts) => {
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${kind}`;
+      // Errors interrupt assertively; success is announced politely by the
+      // container's aria-live (don't set role=status on the injected node — it's
+      // unreliable when the live region and its text arrive in one mutation).
+      if (kind === 'error') toast.setAttribute('role', 'alert');
+
+      const icon = document.createElement('span');
+      icon.className = 'toast-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.innerHTML =
+        kind === 'success'
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg>';
+
+      const content = document.createElement('div');
+      content.className = 'toast-content';
+      const h = document.createElement('p');
+      h.className = 'toast-title';
+      h.textContent = title;
+      content.appendChild(h);
+      if (body) {
+        const pBody = document.createElement('p');
+        pBody.className = 'toast-body';
+        pBody.textContent = body;
+        content.appendChild(pBody);
+      }
+
+      if (reference) {
+        const refBtn = document.createElement('button');
+        refBtn.type = 'button';
+        refBtn.className = 'toast-ref';
+        refBtn.setAttribute('aria-label', `${str('copy', 'Copy')}: ${reference}`);
+        const label = document.createElement('span');
+        label.className = 'toast-ref-label';
+        label.textContent = str('refLabel', 'Reference');
+        const code = document.createElement('span');
+        code.className = 'toast-ref-code';
+        code.textContent = reference;
+        refBtn.append(label, code);
+        refBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(reference);
+            code.textContent = str('copied', 'Copied');
+            window.setTimeout(() => (code.textContent = reference), 1400);
+          } catch {
+            /* clipboard blocked — the code is still visible to copy by hand */
+          }
+        });
+        content.appendChild(refBtn);
+      }
+
+      const close = document.createElement('button');
+      close.type = 'button';
+      close.className = 'toast-close';
+      close.setAttribute('aria-label', str('dismiss', 'Dismiss'));
+      close.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>';
+
+      toast.append(icon, content, close);
+      region.appendChild(toast);
+      // Next frame so the entrance transition runs from the offset start state.
+      requestAnimationFrame(() => toast.classList.add('is-in'));
+
+      let timer = 0;
+      const life = kind === 'error' ? 9000 : 7000;
+      const dismiss = () => {
+        window.clearTimeout(timer);
+        toast.classList.remove('is-in');
+        toast.classList.add('is-out');
+        if (reduce) toast.remove();
+        else {
+          toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+          window.setTimeout(() => toast.remove(), 400); // safety net
+        }
+      };
+      const arm = () => (timer = window.setTimeout(dismiss, life));
+      arm();
+      close.addEventListener('click', dismiss);
+      // Pause the auto-dismiss while the visitor is reading / hovering (Sonner).
+      toast.addEventListener('mouseenter', () => window.clearTimeout(timer));
+      toast.addEventListener('mouseleave', arm);
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submit = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (submit) submit.disabled = true;
+      const reference = makeRef();
+      if (refField) refField.value = reference;
+      try {
+        const body = new URLSearchParams(
+          new FormData(form) as unknown as Record<string, string>,
+        ).toString();
+        const res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        showToast({
+          kind: 'success',
+          title: str('sentTitle', 'Message sent'),
+          body: str('sentBody', ''),
+          reference,
+        });
+      } catch {
+        showToast({ kind: 'error', title: str('failTitle', 'Error'), body: str('failBody', '') });
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    });
+  }
+</script>

@@ -1,0 +1,20 @@
+{
+  "title_en": "What Remains",
+  "title_fr": "Ce qui reste",
+  "year": 2024,
+  "medium_en": "",
+  "medium_fr": "",
+  "dimensions": "",
+  "description_en": "",
+  "description_fr": "",
+  "image": "/images/uploads/works/ce-qui-reste/cover.webp",
+  "images": [
+    "/images/uploads/works/ce-qui-reste/02.webp"
+  ],
+  "width": 1380,
+  "height": 1807,
+  "alt_en": "Violet-blue painting of a tiled wall with a green geometric frieze, faint clock numerals and pale silhouettes dissolving above it.",
+  "alt_fr": "Peinture bleu-violet d'un mur carrelé à frise géométrique verte, chiffres d'horloge estompés et silhouettes pâles se dissolvant au-dessus.",
+  "sold": false,
+  "order": 4
+}

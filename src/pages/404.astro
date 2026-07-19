@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getLangFromUrl, useTranslations, localizePath } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const heading = lang === 'fr' ? 'Page introuvable' : 'Page not found';
+const body =
+  lang === 'fr'
+    ? "La page que vous cherchez n'existe pas ou a été déplacée."
+    : "The page you are looking for doesn't exist or has moved.";
+---
+
+<BaseLayout page="404" title={heading} description={body}>
+  <section class="page-top u-wrap notfound">
+    <p class="eyebrow">404</p>
+    <h1 class="page-title">{heading}</h1>
+    <p class="page-intro">{body}</p>
+    <div class="notfound-actions">
+      <a class="btn btn-primary" href={localizePath('/', lang)}>{t('nav.home')}</a>
+      <a class="btn btn-line" href={localizePath('/works', lang)}>{t('nav.works')}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    min-height: 70svh;
+  }
+  .notfound-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+</style>

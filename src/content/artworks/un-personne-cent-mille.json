@@ -1,0 +1,22 @@
+{
+  "title_en": "One, No One and One Hundred Thousand",
+  "title_fr": "Un, personne et cent mille",
+  "year": 2023,
+  "medium_en": "Oil on canvas",
+  "medium_fr": "Huile sur toile",
+  "dimensions": "75 × 140 cm",
+  "description_en": "",
+  "description_fr": "",
+  "image": "/images/uploads/works/un-personne-cent-mille/cover.webp",
+  "images": [
+    "/images/uploads/works/un-personne-cent-mille/02.webp",
+    "/images/uploads/works/un-personne-cent-mille/03.webp",
+    "/images/uploads/works/un-personne-cent-mille/04.webp"
+  ],
+  "width": 2000,
+  "height": 1177,
+  "alt_en": "Oil painting of a path through walls of green mosaic-like tiles under a violet sky.",
+  "alt_fr": "Peinture à l'huile d'un chemin traversant des murs de carreaux verts en mosaïque sous un ciel violet.",
+  "sold": false,
+  "order": 1
+}
